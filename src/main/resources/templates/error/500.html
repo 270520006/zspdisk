@@ -1,0 +1,30 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>正在奋力抢修中</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{comments/comment.html::topbar}"></div>
+
+    <div th:replace="~{comments/comment.html::sidebar}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">500发生未知错误，正在奋力抢修中~</div>
+    </div>
+
+    <div th:replace="~{comments/comment.html::footbar}"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function() {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

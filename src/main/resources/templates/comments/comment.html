@@ -1,0 +1,87 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<div class="layui-header"   th:fragment="topbar">
+    <div class="layui-logo">zsp网盘</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left   "   >
+        <li class="layui-nav-item"><a href="">网盘</a></li>
+        <li class="layui-nav-item"><a href="">分享</a></li>
+        <li class="layui-nav-item"><a href="">找资源</a></li>
+        <li class="layui-nav-item"><a href="javascript:;">更多</a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a href="">邮件管理</a>
+                </dd>
+                <dd>
+                    <a href="">消息管理</a>
+                </dd>
+                <dd>
+                    <a href="">授权管理</a>
+                </dd>
+            </dl></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item"><a href="javascript:;" th:text="${session.user.getNickname()}"></a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a th:href="@{/user/information}">基本资料</a>
+                </dd>
+                <dd>
+                    <a th:href="@{/user/safeInformation}">安全设置</a>
+                </dd>
+            </dl></li>
+        <li class="layui-nav-item"><a th:href="@{/user/logout}">注销</a></li>
+    </ul>
+</div>
+
+<div class="layui-side layui-bg-black" th:fragment="sidebar">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"   lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class=""href="javascript:;">全部文件</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="javascript:;">图片</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:;">文档</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:;">视频</a>
+                    </dd>
+                    <dd>
+                        <a href="">音乐</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:;">种子</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:;">压缩文件</a>
+                    </dd>
+                    <dd>
+                        <a href="">其他</a>
+                    </dd>
+                </dl></li>
+            <li class="layui-nav-item"><a href="javascript:;">更多功能</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="javascript:;">结识云盘好友</a>
+                    </dd>
+                    <dd>
+                        <a href="javascript:;">推荐好友</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li class="layui-nav-item"><a href="">会员中心</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-footer" th:fragment="footbar">
+    <!-- 底部固定区域 -->
+    朱少鹏有限公司 版权所有©2020-2200 技术支持电话：15396226187
+</div>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsp.mapper.UserMapper">
+<select id="queryById" resultType="user">
+    select * from zspdisk.user where user_id=#{userId}
+</select>
+<select id="queryByUsername" resultType="user">
+     select * from zspdisk.user where username=#{username}
+</select>
+<update id="updateUser" parameterType="user">
+    update  zspdisk.user
+    <set>
+        <if test="nickname!=null">
+            ,nickname=#{nickname}
+        </if>
+        <if test="realname!=null">
+            ,realname=#{realname}
+        </if>
+        <if test="gender!=null">
+            ,gender=#{gender}
+        </if>
+        <if test="phone!=null">
+            ,phone=#{phone}
+        </if>
+        <if test="email!=null">
+            ,email=#{email}
+        </if>
+        <if test="info!=null">
+            ,info=#{info}
+        </if>
+        <if test="privateStatus!=null">
+            ,private_status=#{privateStatus}
+        </if>
+        <if test="privatePass!=null">
+            ,private_pass=#{privatePass}
+        </if>
+    </set>
+    where user_id=#{userId}
+</update>
+</mapper>

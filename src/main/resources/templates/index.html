@@ -1,0 +1,37 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>zsp的网盘登陆</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="login_box">
+    <div class="login_l_img"><img th:src="@{/images/login-img.png}" /></div>
+    <div class="login">
+        <div class="login_logo"><a href="#"><img th:src="@{/images/login_logo.png}" /></a></div>
+        <div class="login_name">
+            <p>网盘登陆</p>
+        </div>
+        <p th:text="${msg}" style="color: red"></p>
+        <form method="post" th:action="@{/login}">
+            <input name="username" type="text"  value="用户名" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
+            <span id="password_text" onclick="this.style.display='none';document.getElementById('password').style.display='block';document.getElementById('password').focus().select();" >密码</span>
+            <input name="password" type="password" id="password" style="display:none;" onblur="if(this.value==''){document.getElementById('password_text').style.display='block';this.style.display='none'};"/>
+            <input value="登录" style="width:100%;" type="submit">
+        </form>
+        <a>忘记密码</a>
+        <a align='right'>注册账号</a>
+    </div>
+    <div class="copyright">朱少鹏有限公司 版权所有©2020-2200 技术支持电话：15396226187</div>
+</div>
+<div style="text-align:center;">
+
+</div>
+</body>
+</html>

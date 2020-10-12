@@ -1,0 +1,111 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>网盘首页</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="~{comments/comment.html::topbar}"></div>
+
+    <div th:replace="~{comments/comment.html::sidebar}"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+
+                <button type="button" class="layui-btn layui-btn-normal" id="upload">
+                    <i class="layui-icon">&#xe67c;</i>上传文件
+                </button>
+            <button type="button" class="layui-btn layui-btn-primary" id="newFile" onclick="a()" >
+                 新建文件夹
+            </button>
+
+
+                <form class="form-inline" style="float: right" th:action="@{/user/queryFileName}" method="get">
+
+                    <input class="input-medium search-query" name="fileName" type="text" style="height: 40px;width: 350px">
+                    <button type="submit"class="layui-btn layui-btn-sm layui-btn-normal" contenteditable="true">查找</button>
+                </form>
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>全部文件</legend>
+            </fieldset>
+
+            <table class="layui-table" lay-skin="line">
+                <colgroup>
+                    <col width="550">
+                    <col width="300">
+
+
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>文件大小</th>
+                    <th>修改时间</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userFolder:${userFolders}">
+                    <td><a  th:href="@{/user/home/{parentId}/(parentId=${userFolder.getFolderId()})} " th:text="${userFolder.getFolderName()} "></a></td>
+                    <td>-</td>
+                    <td th:text="${#dates.format(userFolder.getModifyTime())}"></td>
+
+                </tr>
+                <tr th:each="userFile:${userFiles}">
+                    <td><a th:text="${userFile.getFileName()} "></a></td>
+                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>
+                    <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
+
+                </tr>
+                </tbody>
+            </table>
+
+
+    </div>
+
+    <div th:replace="~{comments/comment.html::footbar}"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function() {
+        var element = layui.element;
+
+    });
+</script>
+
+    <script>
+
+        layui.use('upload', function(){
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#upload' //绑定元素
+                ,url: '/upload/' //上传接口
+                ,done: function(res){
+                    //上传完毕回调
+                }
+                ,error: function(){
+                    //请求异常回调
+                }
+            });
+        });
+  </script>
+  <script>
+      function a() {
+        alert(1);
+      }
+
+  </script>
+</div>
+</body>
+</html>
