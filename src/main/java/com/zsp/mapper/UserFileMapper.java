@@ -10,4 +10,6 @@ import java.util.List;
 public interface UserFileMapper {
     List<UserFile> queryByUserId(int userId);
     List<UserFile> queryByParentId(int userId ,int parentId);
+    List<UserFile> queryByFileName(int userId ,String fileName);
+
 }

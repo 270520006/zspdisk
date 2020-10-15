@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserFolderMapper {
     List<UserFolder> queryByUserId(int userId);
     List<UserFolder> queryByParentId(int userId,int parentId);
+    List<UserFolder> queryByFolderName(int userId,String folderName);
 }

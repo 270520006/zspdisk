@@ -9,5 +9,7 @@
 <select id="queryByParentId"   resultType="userFolder"  >
     select * from user_folder  where user_id=#{userId} and parent_id=#{parentId}
 </select>
-
+    <select id="queryByFolderName"   resultType="userFolder"    >
+    select * from user_folder  where user_id=#{userId} and folder_name=#{folderName}
+</select>
 </mapper>

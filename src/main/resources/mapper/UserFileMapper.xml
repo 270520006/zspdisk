@@ -6,8 +6,10 @@
     <select id="queryByUserId" resultType="userFile" >
     select * from user_file where user_id=#{userId} and parent_id=0
 </select>
-    <select id="queryByParentId"   resultType="userFile"  >
+<select id="queryByParentId"   resultType="userFile"  >
     select * from user_file  where user_id=#{userId} and parent_id=#{parentId}
 </select>
-
+    <select id="queryByFileName"   resultType="userFile"   >
+    select * from user_file  where user_id=#{userId} and file_name=#{fileName}
+</select>
 </mapper>

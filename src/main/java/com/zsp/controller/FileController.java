@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -35,14 +36,16 @@ public class FileController {
         User user =(User) session.getAttribute("user");
         List<UserFolder> userFolders = userFolderMapper.queryByUserId(user.getUserId());
         List<UserFile> userFiles = userFileMapper.queryByUserId(user.getUserId());
-        Map<Integer,String> fileSize= new HashMap<>();
-        for (UserFile userFile : userFiles) {
-            fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
         }
+            model.addAttribute("userFiles",userFiles);
+            model.addAttribute("userFolders",userFolders);
 
-        model.addAttribute("fileSize",fileSize);
-        model.addAttribute("userFolders",userFolders);
-        model.addAttribute("userFiles",userFiles);
 
         return "user/home";
 
@@ -58,11 +61,31 @@ public class FileController {
 
     }
     @GetMapping("/user/queryFileName")
-    public String queryFileName(  String fileName, HttpSession session, Model model){
+    public String queryFileName(String fileName, HttpSession session, Model model){
         User user =(User) session.getAttribute("user");
-        
 
-        return "user/home";
+        if (fileName==null||"".equals(fileName))
+        {
+            return "redirect:/user/home";
+        }
+        else
+        {
+
+            List<UserFolder> userFolders = userFolderMapper.queryByFolderName(user.getUserId(),fileName);
+            List<UserFile> userFiles = userFileMapper.queryByFileName(user.getUserId(), fileName);
+            if (userFiles.size()>=1) {
+                Map<Integer, String> fileSize = new HashMap<>();
+                for (UserFile userFile : userFiles) {
+                    fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+                }
+                model.addAttribute("fileSize", fileSize);
+            }
+            model.addAttribute("userFiles",userFiles);
+            model.addAttribute("userFolders",userFolders);
+            return "user/home";
+
+        }
+
 
     }
 
