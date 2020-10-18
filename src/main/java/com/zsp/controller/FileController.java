@@ -31,6 +31,12 @@ public class FileController {
     @Autowired
     OriginFileMapper originFileMapper;
 
+    /**
+     * 用户主页
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping("/user/home")
     public String home(HttpSession session,Model model){
         User user =(User) session.getAttribute("user");
@@ -57,9 +63,26 @@ public class FileController {
         List<UserFile> userFiles = userFileMapper.queryByParentId(user.getUserId(), parentId);
         model.addAttribute("userFiles",userFiles);
         model.addAttribute("userFolders",userFolders);
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
         return "user/home";
 
     }
+
+
+
+    /**
+     * 查找功能
+     * @param fileName
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/user/queryFileName")
     public String queryFileName(String fileName, HttpSession session, Model model){
         User user =(User) session.getAttribute("user");
@@ -85,8 +108,137 @@ public class FileController {
             return "user/home";
 
         }
-
-
     }
+
+    /**
+     * 图片分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/photos")
+    public String queryPhotos(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryByFileTypePhoto(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+         if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/home";
+    }
+    /**
+     * 文档分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/document")
+    public String queryDocument(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryByFileTypeDocument(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/home";
+    }
+    /**
+     * 视频分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/video")
+    public String queryVideo(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryByFileTypeVideo(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/home";
+    }
+    /**
+     * 音乐分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/music")
+    public String queryMusic(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryByFileTypeMusic(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/home";
+    }
+
+
+    /**
+     * 种子分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/bt")
+    public String queryBT(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryByFileTypeBT(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/home";
+    }
+
+    /**
+     * 压缩文件分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/compressed")
+    public String queryCompressedFile(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryByFileTypeCompressedFile(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/home";
+    }
+
+
 
 }

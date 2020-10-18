@@ -60,7 +60,7 @@
 
                 </tr>
                 <tr th:each="userFile:${userFiles}">
-                    <td><a th:text="${userFile.getFileName()} "></a></td>
+                    <td><a th:text="${userFile.getFileName()}+'.'+${userFile.getFileType()} "></a></td>
                     <!--                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>-->
                     <td th:text="${fileSize.get(userFile.getFileId())}">
                     <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
@@ -93,21 +93,7 @@
                 }
             });
         });
-        layui.use('newFile', function(){
-            var newFile = layui.prompt("请输入文件名","新建文件夹");
 
-            //执行实例
-            var newFileName = upload.render({
-                elem: '#newFile' //绑定元素
-                ,url: '/newFile/' //上传接口
-                ,done: function(res){
-                    //上传完毕回调
-                }
-                ,error: function(){
-                    //请求异常回调
-                }
-            });
-        });
   </script>
 
 

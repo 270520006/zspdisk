@@ -31,6 +31,7 @@ public class UserController {
      * @param session
      * @return
      */
+
     @RequestMapping({"/","/index.html","/toLogin"})
     public String toLogin(HttpSession session){
         if (session.getAttribute("user")!=null)
@@ -72,8 +73,6 @@ public class UserController {
      * 首页功能
      * @return
      */
-
-
     /**
      * 填写用户信息
      * @return
@@ -132,4 +131,7 @@ public class UserController {
         subject.logout();
         return "redirect:index.html";
     }
+
+
+
 }

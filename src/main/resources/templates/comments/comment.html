@@ -5,7 +5,7 @@
     <div class="layui-logo">zsp网盘</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left   "   >
-        <li class="layui-nav-item"><a href="">网盘</a></li>
+        <li class="layui-nav-item"><a th:href="@{/user/home}">网盘</a></li>
         <li class="layui-nav-item"><a href="">分享</a></li>
         <li class="layui-nav-item"><a href="">找资源</a></li>
         <li class="layui-nav-item"><a href="javascript:;">更多</a>
@@ -40,28 +40,28 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree"   lay-filter="test">
             <li class="layui-nav-item layui-nav-itemed">
-                <a class=""href="javascript:;">全部文件</a>
+                <a class="" th:href="@{/user/home}">全部文件</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a href="javascript:;">图片</a>
+                        <a th:href="@{/user/home/photos}">图片</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">文档</a>
+                        <a th:href="@{/user/home/document}">文档</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">视频</a>
+                        <a th:href="@{/user/home/video}">视频</a>
                     </dd>
                     <dd>
-                        <a href="">音乐</a>
+                        <a th:href="@{/user/home/music}">音乐</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">种子</a>
+                        <a th:href="@{/user/home/bt}">种子</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">压缩文件</a>
+                        <a th:href="@{/user/home/compressed}">压缩文件</a>
                     </dd>
                     <dd>
-                        <a href="">其他</a>
+                        <a th:href="@{/user/home}">其他</a>
                     </dd>
                 </dl></li>
             <li class="layui-nav-item"><a href="javascript:;">更多功能</a>
