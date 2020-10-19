@@ -3,12 +3,10 @@ package com.zsp.controller;
 import com.zsp.mapper.OriginFileMapper;
 import com.zsp.mapper.UserFileMapper;
 import com.zsp.mapper.UserFolderMapper;
-import com.zsp.pojo.OriginFile;
 import com.zsp.pojo.User;
 import com.zsp.pojo.UserFile;
 import com.zsp.pojo.UserFolder;
 import com.zsp.utils.FileSizeHelper;
-import com.zsp.utils.FileSizeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,14 +49,25 @@ public class FileController {
         }
             model.addAttribute("userFiles",userFiles);
             model.addAttribute("userFolders",userFolders);
-
+//            告诉其下载id为多少
+            session.setAttribute("uploadId",0);
 
         return "user/home";
 
     }
+
+    /**
+     * 多级目录
+     * @param parentId
+     * @param session
+     * @param model
+     * @return
+     */
     @RequestMapping("/user/home/{parentId}")
     public String deepPage(@PathVariable("parentId") int parentId, HttpSession session, Model model){
         User user =(User) session.getAttribute("user");
+//        告诉下载源父级id
+        session.setAttribute("uploadId",parentId);
         List<UserFolder> userFolders = userFolderMapper.queryByParentId(user.getUserId(),parentId);
         List<UserFile> userFiles = userFileMapper.queryByParentId(user.getUserId(), parentId);
         model.addAttribute("userFiles",userFiles);
@@ -70,10 +79,19 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
+
         return "user/home";
 
     }
 
+    /**
+     * 多文件下载页面的跳转
+     * @return
+     */
+    @RequestMapping("/user/uploadPage")
+    public String uploadPage(){
+        return "user/uploadPage";
+    }
 
 
     /**
@@ -110,6 +128,18 @@ public class FileController {
         }
     }
 
+
+    /**
+     * 对所有分区页面进行管理
+     * @return
+     */
+
+    @RequestMapping("/user/zones")
+    public String zones(){
+        return "user/zones";
+    }
+
+
     /**
      * 图片分区
      * @param session
@@ -128,7 +158,7 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
-        return "user/home";
+        return "user/zones";
     }
     /**
      * 文档分区
@@ -149,7 +179,7 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
-        return "user/home";
+        return "user/zones";
     }
     /**
      * 视频分区
@@ -170,7 +200,7 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
-        return "user/home";
+        return "user/zones";
     }
     /**
      * 音乐分区
@@ -191,7 +221,7 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
-        return "user/home";
+        return "user/zones";
     }
 
 
@@ -214,7 +244,7 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
-        return "user/home";
+        return "user/zones";
     }
 
     /**
@@ -236,7 +266,7 @@ public class FileController {
             }
             model.addAttribute("fileSize", fileSize);
         }
-        return "user/home";
+        return "user/zones";
     }
 
 

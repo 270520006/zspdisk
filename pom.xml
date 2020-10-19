@@ -13,12 +13,25 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>zspdisk</name>
     <description>Demo project for Spring Boot</description>
-
+    <packaging>war</packaging>
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
+        <!-- 非严格HTML5 -->
+        <dependency>
+            <groupId>net.sourceforge.nekohtml</groupId>
+            <artifactId>nekohtml</artifactId>
+            <version>1.9.22</version>
+        </dependency>
+
+        <!-- 文件上传支持 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
 <!--        thymeleaf依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

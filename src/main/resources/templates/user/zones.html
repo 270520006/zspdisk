@@ -16,13 +16,16 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-           <div th:replace="~{comments/comment.html::function}"></div>
 
+            <form class="form-inline" style="float: right" th:action="@{/user/queryFileName}" method="get">
+                <input class="input-medium search-query" name="fileName" type="text" style="height: 33px;width: 350px">
+                <button type="submit"class="layui-btn layui-btn-sm layui-btn-normal" contenteditable="true">查找</button>
+            </form>
             <div th:replace="~{comments/comment.html::list}"></div>
-    </div>
+        </div>
 
-    <div th:replace="~{comments/comment.html::footbar}"></div>
-</div>
+        <div th:replace="~{comments/comment.html::footbar}"></div>
+    </div>
 
 
 
