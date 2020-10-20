@@ -38,16 +38,29 @@ public class FileController {
     @RequestMapping("/user/home")
     public String home(HttpSession session,Model model){
         User user =(User) session.getAttribute("user");
+//        查找用户根目录文件夹
         List<UserFolder> userFolders = userFolderMapper.queryByUserId(user.getUserId());
+//        查找用户根目录下文件
         List<UserFile> userFiles = userFileMapper.queryByUserId(user.getUserId());
+//       判断当前目录下是否有文件，有的话计算大小存入集合
         if (userFiles.size()>=1) {
             Map<Integer, String> fileSize = new HashMap<>();
+//            Map<Integer, String> fileOrigin = new HashMap<>();
             for (UserFile userFile : userFiles) {
+//                查找文件大小并且转换为适用的单位
                 fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+//                查找源文件url
+//                fileOrigin.put(userFile.getFileId(),originFileMapper.queryById(userFile.getOriginId()).getFileUrl());
+
+
             }
+//            System.out.println(fileOrigin); 测试是否能够得到url链接
+//            model.addAttribute("fileOrigin",fileOrigin);
             model.addAttribute("fileSize", fileSize);
+
         }
             model.addAttribute("userFiles",userFiles);
+
             model.addAttribute("userFolders",userFolders);
 //            告诉其下载id为多少
             session.setAttribute("uploadId",0);

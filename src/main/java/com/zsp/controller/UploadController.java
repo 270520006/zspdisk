@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class LoadController {
+public class UploadController {
     @PostMapping("user/upload")
     @ResponseBody
     public Map<String, Object> upload(MultipartFile file, HttpSession session){

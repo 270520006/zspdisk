@@ -111,8 +111,9 @@
             <td>-</td>
             <td th:text="${#dates.format(userFolder.getModifyTime())}"></td>
         </tr>
+
         <tr th:each="userFile:${userFiles}">
-            <td><a th:text="${userFile.getFileName()}+'.'+${userFile.getFileType()} "></a></td>
+            <td><a th:text="${userFile.getFileName()}+'.'+${userFile.getFileType()} " th:href="@{/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
             <!--                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>-->
             <td th:text="${fileSize.get(userFile.getFileId())}">
             <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
@@ -130,7 +131,7 @@
     <button type="button" class="layui-btn layui-btn-normal" id="upload">
         <i class="layui-icon">&#xe67c;</i>上传</button>
 <!--    新建文件夹-->
-    <button type="button" class="layui-btn layui-btn-primary" id="newFile"  >
+    <button type="button" class="layui-btn layui-btn-primary" id="test1"  >
         新建文件夹
     </button>
 
@@ -186,6 +187,37 @@
             });
 
         });
+    </script>
+    <script>
+        layui.use('layer', function() { //独立版的layer无需执行这一句
+            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+            $('#test1').on('click', function(){
+                layer.open({
+                    id:1,
+                    type: 1,
+                    title:'新建文件夹',
+                    skin:'layui-layer-rim',
+                    area:['300px', '220px'],
+
+                    content: ' <div class="row" style="width: 200px;  margin-left:60px; margin-top:40px;">'
+                        +'<div class="col-sm-12">'
+                        +'<div class="input-group">'
+                        +'<span class="input-group-addon icon-align-centers"  > 文件夹名  :</span>'
+                        +'<input id="firstpwd" type="password" class="form-control" placeholder="">'
+                        +'</div>'
+                        +'</div>'
+                        +'</div>'
+                    ,
+                    btn:['保存','取消'],
+                    btn1: function (index,layero) {
+                    },
+                    btn2:function (index,layero) {
+                        layer.close(index);
+                    }
+
+                });
+            });
+        })
     </script>
 
 </div>
