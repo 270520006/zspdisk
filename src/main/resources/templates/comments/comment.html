@@ -113,7 +113,7 @@
         </tr>
 
         <tr th:each="userFile:${userFiles}">
-            <td><a th:text="${userFile.getFileName()}+'.'+${userFile.getFileType()} " th:href="@{/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
+            <td><a th:text="${userFile.getFileName()}+'.'+${userFile.getFileType()} " th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
             <!--                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>-->
             <td th:text="${fileSize.get(userFile.getFileId())}">
             <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
@@ -203,13 +203,38 @@
                         +'<div class="col-sm-12">'
                         +'<div class="input-group">'
                         +'<span class="input-group-addon icon-align-centers"  > 文件夹名  :</span>'
-                        +'<input id="firstpwd" type="password" class="form-control" placeholder="">'
+                        +'<input id="fileName" type="text" class="form-control" placeholder="">'
                         +'</div>'
                         +'</div>'
                         +'</div>'
                     ,
+
                     btn:['保存','取消'],
-                    btn1: function (index,layero) {
+                    btn1: function (index,layro) {
+                        var fileName=$('#fileName').val();
+                        $.ajax({
+                            type : "POST",
+                            url :"/user/newFolder",
+                            dataType:"json",
+                            async: false,
+                            data:{
+                           "fileName":fileName
+                        },
+                        success: function(data) {
+                            if (data.code == 200) {
+
+                                alert(200);
+                            }
+                        }
+
+                    });
+
+
+                        layer.close(index);
+                        window.location.reload();
+
+
+                        // parent.location.reload();
                     },
                     btn2:function (index,layero) {
                         layer.close(index);

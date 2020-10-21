@@ -12,4 +12,7 @@
     <select id="queryByFolderName"   resultType="userFolder"    >
     select * from user_folder  where user_id=#{userId} and folder_name=#{folderName}
 </select>
+<insert id="addNewFolder" parameterType="userFolder">
+    insert into user_folder  (user_id,parent_id,folder_name,create_time,modify_time)values (#{userId},#{parentId},#{folderName},#{createTime},#{modifyTime})
+</insert>
 </mapper>

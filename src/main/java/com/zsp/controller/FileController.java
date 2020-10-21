@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -26,8 +25,7 @@ public class FileController {
     UserFolderMapper userFolderMapper;
     @Autowired
     UserFileMapper userFileMapper;
-    @Autowired
-    OriginFileMapper originFileMapper;
+
 
     /**
      * 用户主页
@@ -45,24 +43,20 @@ public class FileController {
 //       判断当前目录下是否有文件，有的话计算大小存入集合
         if (userFiles.size()>=1) {
             Map<Integer, String> fileSize = new HashMap<>();
-//            Map<Integer, String> fileOrigin = new HashMap<>();
             for (UserFile userFile : userFiles) {
 //                查找文件大小并且转换为适用的单位
                 fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
 //                查找源文件url
-//                fileOrigin.put(userFile.getFileId(),originFileMapper.queryById(userFile.getOriginId()).getFileUrl());
 
 
             }
-//            System.out.println(fileOrigin); 测试是否能够得到url链接
-//            model.addAttribute("fileOrigin",fileOrigin);
             model.addAttribute("fileSize", fileSize);
 
         }
             model.addAttribute("userFiles",userFiles);
 
             model.addAttribute("userFolders",userFolders);
-//            告诉其下载id为多少
+//            告诉其父id为多少
             session.setAttribute("uploadId",0);
 
         return "user/home";

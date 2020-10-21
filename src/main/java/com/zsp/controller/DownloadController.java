@@ -18,7 +18,7 @@ import java.net.URLEncoder;
 public class DownloadController {
     @Autowired
     OriginFileMapper originFileMapper;
-    @RequestMapping("/download/{originId}")
+    @RequestMapping("/user/download/{originId}")
     public String downloads(HttpServletResponse response , HttpServletRequest request,@PathVariable("originId") Integer originId) throws Exception{
         //要下载的地址
         OriginFile originFile = originFileMapper.queryById(originId);
@@ -26,7 +26,7 @@ public class DownloadController {
 
         int ind =path.lastIndexOf("\\");
         String fileName =path.substring(ind+1,path.length());
-      
+
 
         //1、设置response 响应头
         response.reset(); //设置页面不缓存,清空buffer
