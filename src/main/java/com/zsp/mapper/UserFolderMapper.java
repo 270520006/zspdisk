@@ -14,4 +14,5 @@ public interface UserFolderMapper {
     List<UserFolder> queryByParentId(int userId,int parentId);
     List<UserFolder> queryByFolderName(int userId,String folderName);
     Integer addNewFolder(UserFolder userFolder);
+
 }

@@ -1,32 +1,74 @@
 package com.zsp.controller;
 
+import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.FileUtil;
+import com.zsp.mapper.OriginFileMapper;
+import com.zsp.mapper.UserFileMapper;
+import com.zsp.pojo.OriginFile;
+
+import com.zsp.pojo.User;
+import com.zsp.pojo.UserFile;
+import com.zsp.utils.GetFileMD5;
+import com.zsp.utils.GetNowUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.transaction.annotation.Transactional;
+
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 public class UploadController {
+    @Autowired
+    UserFileMapper userFileMapper;
+    @Autowired
+    OriginFileMapper originFileMapper;
+
+    @Transactional
     @PostMapping("user/upload")
     @ResponseBody
-    public Map<String, Object> upload(MultipartFile file, HttpSession session){
+    public Map<String, Object> upload(HttpServletRequest request,MultipartFile file, HttpSession session){
         Integer uploadId = (Integer)session.getAttribute("uploadId");
-        System.out.println(uploadId);
+        User user =(User) session.getAttribute("user");
+
+//        System.out.println(uploadId);   //获取父亲文件id
         Map<String, Object> result = new HashMap<>();
         if (file != null && !file.isEmpty()){
             try {
-                file.transferTo(new File("d:/"+file.getOriginalFilename()));
+//                获取文件名字
+                String filename=file.getOriginalFilename();
+//                文件下载地址
+                String url=request.getServletContext().getRealPath("/") +filename;
+                file.transferTo(new File(url) );
+//                获取文件大小
+                Long fileSize=file.getSize();
+//                获取文件类型
+                String type = FileTypeUtil.getType(FileUtil.file(url));
+//                获取当前时间
+                Date now =GetNowUtils.getNow();
+//                System.out.println(file.getSize());   //获取文件大小
+//                把上传的文件的源文件写入数据库中
+                OriginFile originFile =new OriginFile( GetFileMD5.getMD5Three(url),fileSize,type,url,1,1,now,now);
+                originFileMapper.addOriginFile(originFile);
+
+//                把上传的文件的文件列表写入数据库中
+                UserFile userFile =new UserFile(user.getUserId(),uploadId,originFileMapper.queryByURL(url).getOriginFileId(),filename,fileSize,type,1,now,now,now);
+                userFileMapper.addFile(userFile);
+
+
+
                 result.put("code", 200);
                 result.put("msg", "success");
             } catch (IOException e) {
@@ -41,7 +83,7 @@ public class UploadController {
         return result;
     }
 
-
+    @Transactional
     @PostMapping(value="/user/uploadFiles")
     @ResponseBody
     public String uploadSource(@RequestParam("file") MultipartFile file) {
@@ -75,6 +117,13 @@ public class UploadController {
             e.printStackTrace();
         }
         return "{\"code\":0, \"msg\":\"success\", \"fileUrl\":\"" + pathString + "\"}";
+    }
+
+    public int addFile(UserFile userFile){
+        return userFileMapper.addFile(userFile);
+    }
+    public int addOriginFile(OriginFile originFile){
+        return originFileMapper.addOriginFile(originFile);
     }
 }
 

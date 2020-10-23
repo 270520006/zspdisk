@@ -18,5 +18,6 @@ public interface UserFileMapper {
     List<UserFile> queryByFileTypeMusic(int userId);
     List<UserFile> queryByFileTypeBT(int userId);
     List<UserFile> queryByFileTypeCompressedFile(int userId);
+    int addFile(UserFile userFile);
 
 }

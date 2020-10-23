@@ -3,6 +3,7 @@ package com.zsp.controller;
 import com.zsp.mapper.UserFolderMapper;
 import com.zsp.pojo.User;
 import com.zsp.pojo.UserFolder;
+import com.zsp.utils.GetNowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +23,8 @@ public class NewFileController {
         try {
             UserFolder userFolder =new UserFolder();
 //        获取时间
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-            String format = simpleDateFormat.format(new Date());
-            Date parse = simpleDateFormat.parse(format);
+
+            Date parse = GetNowUtils.getNow();
 //        获取用户id
             User user = (User) session.getAttribute("user");
             int userId = user.getUserId();
@@ -38,7 +38,7 @@ public class NewFileController {
             userFolder.setParentId(parentId);
             Integer integer = userFolderMapper.addNewFolder(userFolder);
             return 200;
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 400;

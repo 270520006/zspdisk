@@ -21,6 +21,7 @@ public class DownloadController {
     @RequestMapping("/user/download/{originId}")
     public String downloads(HttpServletResponse response , HttpServletRequest request,@PathVariable("originId") Integer originId) throws Exception{
         //要下载的地址
+
         OriginFile originFile = originFileMapper.queryById(originId);
         String path= originFile.getFileUrl();
 

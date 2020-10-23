@@ -2,13 +2,13 @@ spring:
   mvc:
     format:
       date: dd/MM/yyyy
-      #设置日期
+  #设置日期
 
   datasource:
     username: root
     password: 123456
     #?serverTimezone=UTC解决时区的报错
-    url: jdbc:mysql://172.16.176.197/zspdisk?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/zspdisk?serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
@@ -33,6 +33,19 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+
+  #  thymeleaf的非严格html的检查
+  thymeleaf:
+    mode: LEGACYHTML5
+  #使用重写后文件上传解析，以添加上传进度监听功能
+  #设置一次请求中最大传输文件大小
+  #设置允许上传的文件的大小
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 1024MB
+      max-file-size: 1024MB
 
 
 

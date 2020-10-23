@@ -32,6 +32,9 @@
                 <dd>
                     <a th:href="@{/user/safeInformation}">安全设置</a>
                 </dd>
+                <dd>
+                    <a th:href="@{/user/changePassword}">修改密码</a>
+                </dd>
             </dl></li>
         <li class="layui-nav-item"><a th:href="@{/user/logout}">注销</a></li>
     </ul>
@@ -113,7 +116,7 @@
         </tr>
 
         <tr th:each="userFile:${userFiles}">
-            <td><a th:text="${userFile.getFileName()}+'.'+${userFile.getFileType()} " th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
+            <td><a th:text="${userFile.getFileName()} " th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
             <!--                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>-->
             <td th:text="${fileSize.get(userFile.getFileId())}">
             <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
@@ -167,6 +170,7 @@
 
                 progress:function(value){//上传进度回调 value进度值
                     element.progress('uploadProgressBar', value+'%')//设置页面进度条
+
                 },
                 before : function (obj) {
                     // this.data={'uri':window.location.href};//关键代码
@@ -179,12 +183,16 @@
                             skin : "layui-layer-molv",
                             content : res.msg
                         });
+                    }else
+                    {
+                        window.location.reload();
                     }
                 },
                 error : function (res) {
 
                 }
             });
+
 
         });
     </script>

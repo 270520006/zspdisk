@@ -13,12 +13,20 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>zspdisk</name>
     <description>Demo project for Spring Boot</description>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
+<!--        糊涂工具包-->
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.4</version>
+        </dependency>
+
         <!-- 非严格HTML5 -->
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>

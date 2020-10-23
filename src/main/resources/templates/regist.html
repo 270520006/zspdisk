@@ -1,0 +1,37 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>zsp的网盘注册</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="login_box" >
+    <div class="login_l_img"  ><img th:src="@{/images/login-img.png}" /></div>
+    <div class="login">
+        <div class="login_logo" style="margin-top: -20px"><a href="#"><img th:src="@{/images/login_logo.png}" /></a></div>
+
+        <p th:text="${msg}" style="color: red"></p>
+        <form method="post" th:action="@{/regist}">
+            <input name="username" type="text"  th:placeholder="用户名" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
+
+            <input name="password" type="password" th:placeholder="用户密码"  onfocus="this.value=''" onblur="if(this.value==''){this.value='用户密码'}">
+
+            <input name="phone" type="text" th:placeholder="电话号码"  onfocus="this.value=''" onblur="if(this.value==''){this.value='手机号'}">
+            <input value="注册" style="width:100%;" type="submit">
+        </form>
+        <a th:href="@{/forget}">忘记密码</a>
+        <a align='right' th:href="@{/}" >返回登录</a>
+    </div>
+    <div class="copyright">朱少鹏有限公司 版权所有©2020-2200 技术支持电话：15396226187</div>
+</div>
+<div style="text-align:center;">
+
+</div>
+</body>
+</html>

@@ -3,9 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zsp.mapper.OriginFileMapper">
-    <select id="queryById" resultType="originFile" >
+<select id="queryById" resultType="originFile" >
     select * from origin_file where origin_file_id=#{originFileId}
 </select>
+<select id="queryByURL" resultType="originFile" >
+    select * from origin_file where file_url=#{fileUrl}
+</select>
+<insert id="addOriginFile" parameterType="originFile">
+    insert into origin_file (file_md5,file_size,file_type,file_url,file_count,file_status,create_time,modify_time)values(#{fileMd5} ,#{fileSize},#{fileType},#{fileUrl},#{fileCount},#{fileStatus},#{createTime},#{modifyTime})
+</insert>
 
 
 </mapper>

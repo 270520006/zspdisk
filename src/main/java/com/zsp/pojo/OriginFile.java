@@ -18,4 +18,15 @@ public class OriginFile {
     private int fileStatus;
     private Date createTime;
     private Date modifyTime;
+
+    public OriginFile(String fileMd5, Long fileSize, String fileType, String fileUrl, int fileCount, int fileStatus, Date createTime, Date modifyTime) {
+        this.fileMd5 = fileMd5;
+        this.fileSize = fileSize;
+        this.fileType = fileType;
+        this.fileUrl = fileUrl;
+        this.fileCount = fileCount;
+        this.fileStatus = fileStatus;
+        this.createTime = createTime;
+        this.modifyTime = modifyTime;
+    }
 }

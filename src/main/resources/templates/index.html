@@ -25,8 +25,8 @@
             <input name="password" type="password" id="password" style="display:none;" onblur="if(this.value==''){document.getElementById('password_text').style.display='block';this.style.display='none'};"/>
             <input value="登录" style="width:100%;" type="submit">
         </form>
-        <a>忘记密码</a>
-        <a align='right'>注册账号</a>
+        <a th:href="@{/forget}">忘记密码</a>
+        <a align='right' th:href="@{/toRegist}">注册账号</a>
     </div>
     <div class="copyright">朱少鹏有限公司 版权所有©2020-2200 技术支持电话：15396226187</div>
 </div>

@@ -30,4 +30,7 @@
 <select id="queryByFileTypeCompressedFile"  resultType="userFile">
         select * from user_file  where user_id=#{userId} and (file_type='rar' or file_type='zip' or file_type='tar' or file_type='cab' or file_type='uue' or file_type='jar' or file_type='iso' or file_type='gzip' )
 </select>
+<insert id="addFile" parameterType="userFile" >
+    insert into user_file (user_id,parent_id,origin_id,file_name,file_size,file_type,file_status,create_time,modify_time)values(#{userId},#{parentId},#{originId},#{fileName},#{fileSize} ,#{fileType} ,#{fileStatus} ,#{createTime} ,#{modifyTime} )
+</insert>
 </mapper>

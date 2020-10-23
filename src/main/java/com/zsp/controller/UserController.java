@@ -3,7 +3,7 @@ package com.zsp.controller;
 import com.zsp.mapper.UserFolderMapper;
 import com.zsp.mapper.UserMapper;
 import com.zsp.pojo.User;
-import com.zsp.pojo.UserFolder;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+
 
 @Controller
 public class UserController {
@@ -39,7 +39,6 @@ public class UserController {
         return "index";
 
     }
-
     /**
      *
      * @param username 用户名
@@ -70,9 +69,134 @@ public class UserController {
     }
 
     /**
-     * 首页功能
+     * 去注册功能
      * @return
      */
+    @RequestMapping("/toRegist")
+    public String toRegist(){
+        return "regist";
+    }
+    /**
+     * 注册功能
+     * @return
+     */
+    @RequestMapping("/regist")
+    public String regist(String username, String password,String phone,Model model,HttpSession session){
+        if (password==null || "".equals(password))
+        {
+             model.addAttribute("msg","密码不能为空");
+            return "regist";
+        }
+        if (phone==null||"".equals(phone))
+        {
+             model.addAttribute("msg","手机号不能为空");
+            return "regist";
+        }
+        if (username!=null&&!"".equals(username))
+        {
+
+            if (userMapper.queryByUsername(username)==null)
+            {
+                userMapper.addUser(username,password,phone);
+                Subject subject= SecurityUtils.getSubject();
+                UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+                subject.login(token);
+                User user=userMapper.queryByUsername(username);
+                System.out.println(user);
+                session.setAttribute("user",user);
+
+                return "redirect:/user/home";
+            }
+            else
+            {
+                model.addAttribute("msg","用户名已存在");
+                return "regist";
+            }
+        }
+        else
+        {
+            model.addAttribute("msg","用户名不能为空");
+            return "regist";
+        }
+
+    }
+
+    /**
+     * 忘记密码页面
+     * @return
+     */
+    @RequestMapping("/forget")
+    public String toForget(){
+        return "forget";
+    }
+
+    /**
+     * 忘记密码功能页面
+      * @param username
+     * @param phone
+     * @return
+     */
+    @PostMapping("/submitForget")
+    public String forget(String username,String phone,String code,Model model,HttpSession session){
+        User user = userMapper.queryByUsername(username);
+        System.out.println(user);
+        if (user==null)
+        {
+            model.addAttribute("msg","该用户不存在");
+            return "forget";
+        }
+        if (phone.equals(user.getPhone())){
+            if (code!=null&&!"".equals(code)){
+
+                Subject subject= SecurityUtils.getSubject();
+                UsernamePasswordToken token=new UsernamePasswordToken(username,user.getPassword());
+                subject.login(token);
+                session.setAttribute("user",userMapper.queryByUsername(username));
+                return "user/changePassword";
+            }
+            else
+            {
+                model.addAttribute("msg","验证码错误");
+                return "forget";
+            }
+        }
+        else
+        {
+            model.addAttribute("msg","用户名对应的手机号错误");
+            return "forget";
+        }
+
+
+    }
+
+    /**
+     * 修改密码页面
+     * @return
+     */
+    @RequestMapping("/user/changePassword")
+    public String changePassword(){
+        return "user/changePassword";
+    }
+    @PostMapping("/user/submitPassword")
+    public String submitPassword(String password1,String password2,HttpSession session,Model model ){
+        if (password1.equals(password2))
+        {
+            User user =new User();
+            user.setPassword(password1);
+            User user1=(User)session.getAttribute("user");
+            user.setUserId( user1.getUserId());
+            userMapper.updateUser(user);
+            session.setAttribute("user",userMapper.queryById(user.getUserId()));
+            return "redirect:/user/home";
+        }
+        else{
+            model.addAttribute("error","两次输入的密码不一致");
+            return "user/changePassword";
+        }
+
+    }
+
+
     /**
      * 填写用户信息
      * @return
@@ -99,6 +223,7 @@ public class UserController {
          User user1=(User)session.getAttribute("user");
          user.setUserId( user1.getUserId());
          userMapper.updateUser(user);
+         session.setAttribute("user",userMapper.queryById(user.getUserId()));
          return "redirect:/user/home";
     }
     @PostMapping("/user/toSubmitPrivate")

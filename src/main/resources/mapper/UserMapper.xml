@@ -12,6 +12,9 @@
 <update id="updateUser" parameterType="user">
     update  zspdisk.user
     <set>
+        <if test="password!=null">
+            ,password=#{password}
+        </if>
         <if test="nickname!=null">
             ,nickname=#{nickname}
         </if>
@@ -39,4 +42,7 @@
     </set>
     where user_id=#{userId}
 </update>
+<insert id="addUser">
+    insert into zspdisk.user (username,password,phone)values(#{username},#{password},#{phone})
+</insert>
 </mapper>
