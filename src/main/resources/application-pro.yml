@@ -8,7 +8,9 @@ spring:
     username: root
     password: 123456
     #?serverTimezone=UTC解决时区的报错
-    url: jdbc:mysql://localhost:3306/zspdisk?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://47.112.131.163:3310/zspdisk?serverTimezone=Asia/Shanghai
+
+#    url: jdbc:mysql://localhost:3306/zspdisk?serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
