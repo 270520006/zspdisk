@@ -2,6 +2,7 @@ package com.zsp.controller;
 
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpResponse;
 import com.zsp.mapper.OriginFileMapper;
 import com.zsp.mapper.UserFileMapper;
@@ -53,7 +54,16 @@ public class UploadController {
                 String filename=file.getOriginalFilename();
 //                文件下载地址
 
-                String url=request.getServletContext().getRealPath("/") +filename;
+//      window/linux文件下载1.0    到tomcat的工作目录下 ，但问题太多了，因为每创建一个tomcat就要重新更换磁盘文件位置
+//                String url=request.getServletContext().getRealPath("/") +filename;
+
+//      window文件下载地址2.0 window下截取字符,但这里需要先去tomcat的temp下创建一个files文件夹
+//                String url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+filename;
+//                System.out.println(url);
+
+//        linux文件下载地址2.0版本   直接存到tmp下files文件夹下，（我们在/tmp/下创建了一个files用来存储）
+                String url= "/tmp/files/"+filename;
+
                 file.transferTo(new File(url) );
 //                获取文件大小
                 Long fileSize=file.getSize();
@@ -119,10 +129,18 @@ public class UploadController {
                 filename = filename.substring(pos + 1);
 
 
+
+
+
 //            pathString = "d:/" +filename;//上传到本地 Windows下
-              url=request.getServletContext().getRealPath("/") +filename; //linux下创建下载路径
+            //      window/linux文件下载1.0    到tomcat的工作目录下 ，但问题太多了，因为每创建一个tomcat就要重新更换磁盘文件位置
+//            url=request.getServletContext().getRealPath("/") +filename;
 
-
+//      window文件下载地址2.0 window下截取字符,但这里需要先去tomcat的temp下创建一个files文件夹
+//                String url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+filename;
+//                System.out.println(url);
+//            linux文件下载地址2.0 window下截取字符,但这里需要先去tomcat的temp下创建一个files文件夹
+           url= "/tmp/files/"+filename;
 
 
         }
