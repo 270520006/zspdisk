@@ -12,6 +12,35 @@
 <insert id="addOriginFile" parameterType="originFile">
     insert into origin_file (file_md5,file_size,file_type,file_url,file_count,file_status,create_time,modify_time)values(#{fileMd5} ,#{fileSize},#{fileType},#{fileUrl},#{fileCount},#{fileStatus},#{createTime},#{modifyTime})
 </insert>
+<select id="queryByMD5" resultType="originFile" >
+    select * from origin_file where file_md5=#{fileMd5}
+</select>
+    <update id="updateOriginFile" parameterType="originFile" >
+        update  origin_file
+        <set>
+            <if test="fileSize!=null">
+                ,file_size=#{fileSize}
+            </if>
+            <if test="fileType!=null">
+                ,file_type=#{fileType}
+            </if>
+            <if test="fileUrl!=null">
+                ,file_url=#{fileUrl}
+            </if>
+                <if test="fileCount!=null">
+                ,file_count=#{fileCount}
+            </if>
+            <if test="fileStatus!=null">
+                ,file_status=#{fileStatus}
+            </if>
+            <if test="createTime!=null">
+                ,create_time=#{createTime}
+            </if>
+            <if test="modifyTime!=null">
+                ,modify_time=#{modifyTime}
+            </if>
 
-
+        </set>
+        where origin_file_id=#{originFileId}
+    </update>
 </mapper>

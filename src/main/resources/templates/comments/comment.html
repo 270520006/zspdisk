@@ -96,7 +96,8 @@
     </fieldset>
     <table class="layui-table" lay-skin="line">
         <colgroup>
-            <col width="550">
+            <col width="500">
+            <col width="300">
             <col width="300">
             <col>
         </colgroup>
@@ -105,6 +106,7 @@
             <th>文件名</th>
             <th>文件大小</th>
             <th>修改时间</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -113,6 +115,7 @@
             <td><a  th:href="@{/user/home/{parentId}/(parentId=${userFolder.getFolderId()})} " th:text="${userFolder.getFolderName()} "></a></td>
             <td>-</td>
             <td th:text="${#dates.format(userFolder.getModifyTime())}"></td>
+            <td>  <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></td>
         </tr>
 
         <tr th:each="userFile:${userFiles}">
@@ -120,6 +123,12 @@
             <!--                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>-->
             <td th:text="${fileSize.get(userFile.getFileId())}">
             <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">下载</button>
+
+                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button>
+
+            </td>
         </tr>
         </tbody>
     </table>
@@ -138,6 +147,12 @@
         新建文件夹
     </button>
 
+    <button type="button" class="layui-btn layui-btn-primary" th:if="${session.uploadId != 0}">
+        返回
+    </button>
+    <button type="button" class="layui-btn layui-btn-primary " id=""  th:if="${session.uploadId != 0}" >
+        首页
+    </button>
 <!--    查找功能-->
     <form class="form-inline" style="float: right" th:action="@{/user/queryFileName}" method="get">
 
