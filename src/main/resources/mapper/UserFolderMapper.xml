@@ -4,15 +4,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zsp.mapper.UserFolderMapper">
 <select id="queryByUserId" resultType="UserFolder" >
-    select * from user_folder where user_id=#{userId} and parent_id=0
+    select * from user_folder where user_id=#{userId} and parent_id=0 and folder_status=1
 </select>
 <select id="queryByParentId"   resultType="userFolder"  >
-    select * from user_folder  where user_id=#{userId} and parent_id=#{parentId}
+    select * from user_folder  where user_id=#{userId} and parent_id=#{parentId} and folder_status=1
 </select>
     <select id="queryByFolderName"   resultType="userFolder"    >
-    select * from user_folder  where user_id=#{userId} and folder_name=#{folderName}
+    select * from user_folder  where user_id=#{userId} and folder_name=#{folderName} and folder_status=1
 </select>
 <insert id="addNewFolder" parameterType="userFolder">
     insert into user_folder  (user_id,parent_id,folder_name,create_time,modify_time)values (#{userId},#{parentId},#{folderName},#{createTime},#{modifyTime})
 </insert>
+<select id="queryParentId"  resultType="integer"   >
+    select parent_id from user_folder where user_id=#{userId} and folder_id=#{folderId}
+</select>
+<select id="queryRecycleFolderByUserId"  resultType="userFolder"   >
+    select * from user_folder where user_id=#{userId} and folder_status=2
+</select>
+<update id="updateFolder" parameterType="userFolder" >
+        update  user_folder
+        <set>
+            <if test="userId!=0">
+                ,user_id=#{userId}
+            </if>
+            <if test="parentId!=0">
+                ,parent_id=#{parentId}
+            </if>
+            <if test="folderName!=null">
+                ,folder_name=#{folderName}
+            </if>
+            <if test="folderStatus!=0">
+                ,folder_status=#{folderStatus}
+            </if>
+            <if test="createTime!=null">
+                ,create_time=#{createTime}
+            </if>
+            <if test="modifyTime!=null">
+                ,modify_time=#{modifyTime}
+            </if>
+            <if test="deleteTime!=null">
+                ,delete_time=#{deleteTime}
+            </if>
+
+        </set>
+        where folder_id=#{folderId}
+</update>
 </mapper>

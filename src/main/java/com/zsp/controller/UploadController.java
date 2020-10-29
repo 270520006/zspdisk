@@ -14,7 +14,6 @@ import com.zsp.pojo.UserFile;
 import com.zsp.utils.GetFileMD5;
 import com.zsp.utils.GetNowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 

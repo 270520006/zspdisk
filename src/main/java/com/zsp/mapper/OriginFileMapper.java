@@ -15,4 +15,5 @@ public interface OriginFileMapper {
     OriginFile queryByURL(String fileUrl);
     OriginFile queryByMD5(String fileMd5);
     int updateOriginFile(OriginFile originFile);
+
 }

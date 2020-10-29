@@ -1,6 +1,7 @@
 package com.zsp.mapper;
 
 
+import com.zsp.pojo.OriginFile;
 import com.zsp.pojo.UserFile;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,10 @@ public interface UserFileMapper {
     List<UserFile> queryByFileTypeMusic(int userId);
     List<UserFile> queryByFileTypeBT(int userId);
     List<UserFile> queryByFileTypeCompressedFile(int userId);
+    List<UserFile> queryRecycleFileByUserId(int userId );
+    Integer queryOriginIdByFileId(Integer fileId );
     int addFile(UserFile userFile);
+    int updateFile(UserFile userFile);
+
 
 }

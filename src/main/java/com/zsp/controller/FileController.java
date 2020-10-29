@@ -62,10 +62,14 @@ public class FileController {
         return "user/home";
 
     }
+    @RequestMapping("/user/notice")
+    public String notice(){
+        return "user/notice";
+    }
 
     /**
      * 多级目录
-     * @param parentId
+     * @param parentId   这个是要点击的文件夹的当前id 但是是下一级文件的父亲id
      * @param session
      * @param model
      * @return
@@ -276,6 +280,28 @@ public class FileController {
         return "user/zones";
     }
 
+    /**
+     * 回收站的分区
+     * @param session
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/home/recycle")
+    public String queryRecycle(HttpSession session, Model model){
+        User user =(User) session.getAttribute("user");
+        List<UserFile> userFiles = userFileMapper.queryRecycleFileByUserId(user.getUserId());
+        List<UserFolder> userFolders=userFolderMapper.queryRecycleFolderByUserId(user.getUserId());
+        model.addAttribute("userFiles",userFiles);
+        model.addAttribute("userFolders",userFolders);
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+        return "user/recycle";
+    }
 
 
 }

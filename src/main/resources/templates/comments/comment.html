@@ -9,7 +9,7 @@
     <ul class="layui-nav layui-layout-left   "   >
         <li class="layui-nav-item"><a th:href="@{/user/home}">网盘</a></li>
         <li class="layui-nav-item"><a th:href="@{/user/uploadPage}" >多文件上传</a></li>
-        <li class="layui-nav-item"><a href="">更新公告</a></li>
+        <li class="layui-nav-item"><a th:href="@{/user/notice}">更新公告</a></li>
         <li class="layui-nav-item"><a href="javascript:;">更多</a>
             <dl class="layui-nav-child">
                 <dd>
@@ -65,8 +65,12 @@
                     <dd>
                         <a th:href="@{/user/home/compressed}">压缩文件</a>
                     </dd>
+
                     <dd>
                         <a th:href="@{/user/home}">其他</a>
+                    </dd>
+                    <dd>
+                        <a  th:href="@{/user/home/recycle}">回收站</a>
                     </dd>
                 </dl></li>
             <li class="layui-nav-item"><a href="javascript:;">更多功能</a>
@@ -111,27 +115,28 @@
         </thead>
         <tbody>
         <tr th:each="userFolder:${userFolders}">
-
+<!--            parentId就是这个文件夹的当前id-->
             <td><a  th:href="@{/user/home/{parentId}/(parentId=${userFolder.getFolderId()})} " th:text="${userFolder.getFolderName()} "></a></td>
             <td>-</td>
             <td th:text="${#dates.format(userFolder.getModifyTime())}"></td>
-            <td>  <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></td>
+            <td>  <a  th:href="@{/user/deleteFolder/{folderId}/(folderId=${userFolder.getFolderId()})} " onclick="if(confirm('确定删除这个文件夹吗？【7天内可以在回收站内找回】')==false)return false;"><button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></a></td>
         </tr>
 
         <tr th:each="userFile:${userFiles}">
-            <td><a th:text="${userFile.getFileName()} " th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
+            <td><a th:text="${userFile.getFileName()} "  th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"></a></td>
             <!--                    <td th:text="${fileSize.get(userFile.getFileId())}"></td>-->
             <td th:text="${fileSize.get(userFile.getFileId())}">
             <td th:text="${#dates.format(userFile.getModifyTime())}"></td>
             <td>
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">下载</button>
+              <a th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"> <button type="button" class="layui-btn layui-btn-normal layui-btn-radius"  >下载</button></a>
 
-                <button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button>
+                <a  th:href="@{/user/deleteFile/{fileId}/(fileId=${userFile.getFileId()})}" onclick="if(confirm('确定删除这个文件吗？【7天内可以在回收站内找回】')==false)return false;"><button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></a>
 
             </td>
         </tr>
         </tbody>
     </table>
+
 </div>
 <!--功能按键的抽取-->
 <div th:fragment="function">
@@ -143,14 +148,14 @@
     <button type="button" class="layui-btn layui-btn-normal" id="upload">
         <i class="layui-icon">&#xe67c;</i>上传</button>
 <!--    新建文件夹-->
-    <button type="button" class="layui-btn layui-btn-primary" id="test1"  >
+    <button type="button" class="layui-btn layui-btn-primary" id="newFolder"  >
         新建文件夹
     </button>
 
-    <button type="button" class="layui-btn layui-btn-primary" th:if="${session.uploadId != 0}">
-        返回
+    <button type="button" class="layui-btn layui-btn-primary"    th:onclick="backPage()"   th:if="${session.uploadId != 0}">
+        返回上级
     </button>
-    <button type="button" class="layui-btn layui-btn-primary " id=""  th:if="${session.uploadId != 0}" >
+    <button type="button" class="layui-btn layui-btn-primary " id="" th:onclick="backHome()" th:if="${session.uploadId != 0}" >
         首页
     </button>
 <!--    查找功能-->
@@ -172,6 +177,7 @@
     <script th:src="@{/layui/layui.js}"></script>
 
     <script>
+        // 绑定上传文件功能
         layui.use(["layer","form", "upload","jquery","element"], function () {
             // 注意：为了动态显示进度条，必须加载element组件
             var layer = layui.layer, upload = layui.upload, $ = layui.jquery, element = layui.element;
@@ -210,11 +216,11 @@
 
 
         });
-    </script>
-    <script>
+
+        // 绑定新建文件夹按钮
         layui.use('layer', function() { //独立版的layer无需执行这一句
             var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-            $('#test1').on('click', function(){
+            $('#newFolder').on('click', function(){
                 layer.open({
                     id:1,
                     type: 1,
@@ -241,16 +247,16 @@
                             dataType:"json",
                             async: false,
                             data:{
-                           "fileName":fileName
-                        },
-                        success: function(data) {
-                            if (data.code == 200) {
+                                "fileName":fileName
+                            },
+                            success: function(data) {
+                                if (data.code == 200) {
 
-                                alert(200);
+                                    alert(200);
+                                }
                             }
-                        }
 
-                    });
+                        });
 
 
                         layer.close(index);
@@ -265,8 +271,21 @@
 
                 });
             });
-        })
+        });
+
+        // 返回按钮
+        function backPage() {
+            window.location.href="/user/backPage";
+        }
+        // 返回首页按钮
+        function backHome() {
+            window.location.href="/user/home";
+        }
+
+
     </script>
+
+
 
 </div>
 

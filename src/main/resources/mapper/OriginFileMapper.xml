@@ -9,13 +9,14 @@
 <select id="queryByURL" resultType="originFile" >
     select * from origin_file where file_url=#{fileUrl}
 </select>
-<insert id="addOriginFile" parameterType="originFile">
-    insert into origin_file (file_md5,file_size,file_type,file_url,file_count,file_status,create_time,modify_time)values(#{fileMd5} ,#{fileSize},#{fileType},#{fileUrl},#{fileCount},#{fileStatus},#{createTime},#{modifyTime})
-</insert>
 <select id="queryByMD5" resultType="originFile" >
     select * from origin_file where file_md5=#{fileMd5}
 </select>
-    <update id="updateOriginFile" parameterType="originFile" >
+
+<insert id="addOriginFile" parameterType="originFile">
+    insert into origin_file (file_md5,file_size,file_type,file_url,file_count,file_status,create_time,modify_time)values(#{fileMd5} ,#{fileSize},#{fileType},#{fileUrl},#{fileCount},#{fileStatus},#{createTime},#{modifyTime})
+</insert>
+<update id="updateOriginFile" parameterType="originFile" >
         update  origin_file
         <set>
             <if test="fileSize!=null">
@@ -27,10 +28,10 @@
             <if test="fileUrl!=null">
                 ,file_url=#{fileUrl}
             </if>
-                <if test="fileCount!=null">
+                <if test="fileCount!=0">
                 ,file_count=#{fileCount}
             </if>
-            <if test="fileStatus!=null">
+            <if test="fileStatus!=0">
                 ,file_status=#{fileStatus}
             </if>
             <if test="createTime!=null">
@@ -42,5 +43,5 @@
 
         </set>
         where origin_file_id=#{originFileId}
-    </update>
+</update>
 </mapper>

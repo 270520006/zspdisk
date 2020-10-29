@@ -14,6 +14,7 @@ public class UserFolder {
     private int userId;
     private int parentId;
     private String folderName;
+    private int folderStatus;
     private Date createTime;
     private Date modifyTime;
     private Date deleteTime;

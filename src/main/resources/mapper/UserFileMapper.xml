@@ -3,34 +3,77 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zsp.mapper.UserFileMapper">
-    <select id="queryByUserId" resultType="userFile" >
-    select * from user_file where user_id=#{userId} and parent_id=0
+<select id="queryByUserId" resultType="userFile" >
+    select * from user_file where user_id=#{userId} and parent_id=0 and file_status=1
 </select>
 <select id="queryByParentId"   resultType="userFile"  >
-    select * from user_file  where user_id=#{userId} and parent_id=#{parentId}
+    select * from user_file  where user_id=#{userId} and parent_id=#{parentId} and file_status=1
 </select>
 <select id="queryByFileName"   resultType="userFile"   >
-    select * from user_file  where user_id=#{userId} and file_name=#{fileName}
+    select * from user_file  where user_id=#{userId} and file_name=#{fileName} and file_status=1
 </select>
 <select id="queryByFileTypePhoto"  resultType="userFile">
-        select * from user_file  where user_id=#{userId} and (file_type='bmp' or file_type='jpg' or file_type='png' or file_type='tif' or file_type='gif' or file_type='pcx' or file_type='tga' or file_type='exif' or file_type='svg' or file_type='psd' or file_type='cdr' or file_type='pcd'  or file_type='avif' or file_type='webp' or file_type='WMF')
+        select * from user_file  where user_id=#{userId} and file_status=1 and (file_type='bmp' or file_type='jpg' or file_type='png' or file_type='tif' or file_type='gif' or file_type='pcx' or file_type='tga' or file_type='exif' or file_type='svg' or file_type='psd' or file_type='cdr' or file_type='pcd'  or file_type='avif' or file_type='webp' or file_type='WMF')
 </select>
 <select id="queryByFileTypeDocument"  resultType="userFile">
-        select * from user_file  where user_id=#{userId} and (file_type='txt' or file_type='doc' or file_type='docx' or file_type='dot' or file_type='dotx' or file_type='wpt' or file_type='ppt' or file_type='pptx' or file_type='rtf' or file_type='xls' or file_type='xlsx' or file_type='excel'  or file_type='pdf' or file_type='excel' or file_type='md' )
+        select * from user_file  where user_id=#{userId} and file_status=1  and (file_type='txt' or file_type='doc' or file_type='docx' or file_type='dot' or file_type='dotx' or file_type='wpt' or file_type='ppt' or file_type='pptx' or file_type='rtf' or file_type='xls' or file_type='xlsx' or file_type='excel'  or file_type='pdf' or file_type='excel' or file_type='md' )
 </select>
 <select id="queryByFileTypeVideo"  resultType="userFile">
-        select * from user_file  where user_id=#{userId} and (file_type='wmv' or file_type='asf' or file_type='asx' or file_type='rm' or file_type='rmvb' or file_type='mp4' or file_type='3gp' or file_type='mov' or file_type='m4v' or file_type='avi' or file_type='dat' or file_type='mkv'  or file_type='flv' or file_type='vob'  )
+        select * from user_file  where user_id=#{userId} and file_status=1 and (file_type='wmv' or file_type='asf' or file_type='asx' or file_type='rm' or file_type='rmvb' or file_type='mp4' or file_type='3gp' or file_type='mov' or file_type='m4v' or file_type='avi' or file_type='dat' or file_type='mkv'  or file_type='flv' or file_type='vob'  )
 </select>
 <select id="queryByFileTypeMusic"  resultType="userFile">
-        select * from user_file  where user_id=#{userId} and (file_type='MPEG' or file_type='MP3' or file_type='MIDI' or file_type='WMA' or file_type='VQF' or file_type='AMR' or file_type='AAC' or file_type='FLAC'   )
+        select * from user_file  where user_id=#{userId} and file_status=1 and (file_type='MPEG' or file_type='MP3' or file_type='MIDI' or file_type='WMA' or file_type='VQF' or file_type='AMR' or file_type='AAC' or file_type='FLAC'   )
 </select>
 <select id="queryByFileTypeBT"  resultType="userFile">
-        select * from user_file  where user_id=#{userId} and (file_type='torrent')
+        select * from user_file  where user_id=#{userId} and file_status=1 and (file_type='torrent')
 </select>
 <select id="queryByFileTypeCompressedFile"  resultType="userFile">
-        select * from user_file  where user_id=#{userId} and (file_type='rar' or file_type='zip' or file_type='tar' or file_type='cab' or file_type='uue' or file_type='jar' or file_type='iso' or file_type='gzip' )
+        select * from user_file  where user_id=#{userId} and file_status=1  and (file_type='rar' or file_type='zip' or file_type='tar' or file_type='cab' or file_type='uue' or file_type='jar' or file_type='iso' or file_type='gzip' )
 </select>
 <insert id="addFile" parameterType="userFile" >
     insert into user_file (user_id,parent_id,origin_id,file_name,file_size,file_type,file_status,create_time,modify_time)values(#{userId},#{parentId},#{originId},#{fileName},#{fileSize} ,#{fileType} ,#{fileStatus} ,#{createTime} ,#{modifyTime} )
 </insert>
+<update id="updateFile" parameterType="userFile" >
+        update  user_file
+        <set>
+            <if test="userId!=0">
+                ,user_id=#{userId}
+            </if>
+            <if test="parentId!=0">
+                ,parent_id=#{parentId}
+            </if>
+            <if test="originId!=0">
+                ,origin_id=#{originId}
+            </if>
+            <if test="fileName!=null">
+                ,file_name=#{fileName}
+            </if>
+            <if test="fileSize!=null">
+                ,file_size=#{fileSize}
+            </if>
+            <if test="fileType!=null">
+                ,file_type=#{fileType}
+            </if>
+            <if test="fileStatus!=null">
+                ,file_status=#{fileStatus}
+            </if>
+            <if test="createTime!=null">
+                ,create_time=#{createTime}
+            </if>
+            <if test="modifyTime!=null">
+                ,modify_time=#{modifyTime}
+            </if>
+            <if test="deleteTime!=null">
+                ,delete_time=#{deleteTime}
+            </if>
+
+        </set>
+        where file_id=#{fileId}
+    </update>
+<select id="queryRecycleFileByUserId" resultType="userFile" >
+    select * from user_file where user_id=#{userId}  and file_status=2
+</select>
+<select id="queryOriginIdByFileId" resultType="integer">
+    select origin_id from user_file where  file_id=#{fileId}
+</select>
 </mapper>

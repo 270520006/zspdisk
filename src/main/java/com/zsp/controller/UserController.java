@@ -256,6 +256,20 @@ public class UserController {
         subject.logout();
         return "redirect:index.html";
     }
+    @GetMapping("/user/backPage")
+    public String backPage(HttpSession session){
+        User user =(User) session.getAttribute("user");
+        System.out.println(user.getUserId());
+//        告诉下载源当前id   就是下载文件的当前id
+        Integer nowId =(Integer) session.getAttribute("uploadId");
+        System.out.println(nowId);
+        Integer parentId = userFolderMapper.queryParentId(user.getUserId(), nowId);
+        System.out.println(parentId);
+        if (parentId!=0)
+        {return "redirect:/user/home/"+parentId; }
+         return "redirect:/user/home";
+
+    }
 
 
 
