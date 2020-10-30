@@ -62,13 +62,16 @@ public class UploadController {
 //      window文件下载地址2.0 window下截取字符
 //      但这里需要先去tomcat的temp下创建一个files文件夹
 //      这里使用uuid是为了防止上传文件跟我们的源文件名字重名
-                String url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+IdUtil.randomUUID()+"="+filename  ;
+
+//                String url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+IdUtil.randomUUID()+"="+filename  ;
+
 //                System.out.println(url);
 
 //        linux文件下载地址2.0版本   直接存到tmp下files文件夹下，（我们在/tmp/下创建了一个files用来存储）
 //                String url= "/tmp/files/"+filename;
+//        linux3.0版本
+                String url= "/tmp/files/"+IdUtil.randomUUID()+"="+filename  ;
 
-//          window3.0版本
                 file.transferTo(new File(url) );
                 String md5=GetFileMD5.getMD5Three(url);
                 OriginFile queryByMD5 = originFileMapper.queryByMD5(md5);
@@ -171,9 +174,12 @@ public class UploadController {
             //      这里使用uuid是为了防止上传文件跟我们的源文件名字重名
             url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+IdUtil.randomUUID()+"="+filename  ;
 //                System.out.println(url);
+
 //            linux文件下载地址2.0 window下截取字符,但这里需要先去tomcat的temp下创建一个files文件夹
 //           url= "/tmp/files/"+filename;
 
+//            linux3.0版本
+            url= "/tmp/files/"+IdUtil.randomUUID()+"="+filename  ;
 
         }
 

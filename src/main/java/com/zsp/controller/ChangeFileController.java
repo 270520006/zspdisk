@@ -13,9 +13,40 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @RestController
-public class NewFileController {
+public class ChangeFileController {
     @Autowired
     UserFolderMapper userFolderMapper;
+//    修改文件名字
+    @PostMapping("/user/rename")
+    public Integer  rename(HttpSession session, String fileName)  {
+        if ("".equals(fileName))
+        {
+            return 200;
+        }
+        try {
+            UserFolder userFolder =new UserFolder();
+//        获取时间
+
+            Date parse = GetNowUtils.getNow();
+//        获取用户id
+            User user = (User) session.getAttribute("user");
+            int userId = user.getUserId();
+//        获取父亲文件id
+            Integer parentId = (Integer) session.getAttribute("uploadId");
+
+
+            userFolder.setModifyTime(parse);
+            userFolder.setFolderName(fileName);
+            userFolder.setUserId(userId);
+            userFolder.setParentId(parentId);
+            Integer integer = userFolderMapper.updateFolder(userFolder);
+            return 200;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 400;
+    }
+
     @PostMapping("/user/newFolder")
     public Integer  newFolder(HttpSession session, String fileName)  {
         if ("".equals(fileName))

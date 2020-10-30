@@ -119,7 +119,11 @@
             <td><a  th:href="@{/user/home/{parentId}/(parentId=${userFolder.getFolderId()})} " th:text="${userFolder.getFolderName()} "></a></td>
             <td>-</td>
             <td th:text="${#dates.format(userFolder.getModifyTime())}"></td>
-            <td>  <a  th:href="@{/user/deleteFolder/{folderId}/(folderId=${userFolder.getFolderId()})} " onclick="if(confirm('确定删除这个文件夹吗？【7天内可以在回收站内找回】')==false)return false;"><button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></a></td>
+            <td>
+
+                <a  th:href="@{/user/deleteFolder/{folderId}/(folderId=${userFolder.getFolderId()})} " onclick="if(confirm('确定删除这个文件夹吗？【7天内可以在回收站内找回】')==false)return false;"><button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></a>
+
+            </td>
         </tr>
 
         <tr th:each="userFile:${userFiles}">

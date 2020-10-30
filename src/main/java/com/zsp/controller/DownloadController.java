@@ -24,8 +24,12 @@ public class DownloadController {
 
         OriginFile originFile = originFileMapper.queryById(originId);
         String path= originFile.getFileUrl();
-        int ind =path.lastIndexOf("="); //   windows下
-//        int ind =path.lastIndexOf("/");//linux下
+
+        int ind =path.lastIndexOf("="); //现在版本下
+        if (ind==-1){
+            ind =path.lastIndexOf("/");//原文的linux下
+        }
+
         String fileName =path.substring(ind+1,path.length());
 
 
