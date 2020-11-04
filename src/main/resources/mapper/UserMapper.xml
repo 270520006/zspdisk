@@ -9,6 +9,8 @@
 <select id="queryByUsername" resultType="user">
      select * from zspdisk.user where username=#{username}
 </select>
+
+
 <update id="updateUser" parameterType="user">
     update  zspdisk.user
     <set>
@@ -45,4 +47,5 @@
 <insert id="addUser">
     insert into zspdisk.user (username,password,phone)values(#{username},#{password},#{phone})
 </insert>
+
 </mapper>

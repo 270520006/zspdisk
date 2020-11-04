@@ -4,6 +4,7 @@ import com.zsp.mapper.UserFolderMapper;
 import com.zsp.mapper.UserMapper;
 import com.zsp.pojo.User;
 
+import com.zsp.utils.CheckUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -50,8 +51,9 @@ public class UserController {
     @PostMapping("/login")
     public String login( String username, String password, Model model,HttpSession session){
 
-        Subject subject= SecurityUtils.getSubject();
 
+//        正常用户登录流程
+        Subject subject= SecurityUtils.getSubject();
         UsernamePasswordToken token=new UsernamePasswordToken(username,password);
         try{
             subject.login(token);
@@ -81,17 +83,30 @@ public class UserController {
      * @return
      */
     @RequestMapping("/regist")
-    public String regist(String username, String password,String phone,Model model,HttpSession session){
-        if (password==null || "".equals(password))
-        {
-             model.addAttribute("msg","密码不能为空");
+    public String regist(String username, String password,String phone,Model model,HttpSession session) {
+        if (password == null || "".equals(password)) {
+            model.addAttribute("msg", "密码不能为空");
             return "regist";
         }
-        if (phone==null||"".equals(phone))
-        {
-             model.addAttribute("msg","手机号不能为空");
+        if (phone == null || "".equals(phone)) {
+            model.addAttribute("msg", "手机号不能为空");
+
             return "regist";
         }
+        if (!CheckUtils.isChinaPhoneLegal(phone)) {
+            model.addAttribute("msg", "号码格式不规范");
+            return "regist";
+        }
+        if (!CheckUtils.checkName(username)) {
+            model.addAttribute("msg", "用户名为6-10位，包含字母数字且不能以数字开头");
+            return "regist";
+        }
+        if (!CheckUtils.checkPwd(password)) {
+            model.addAttribute("msg", "密码为6-12位，包含字母数字或下划线");
+            return "regist";
+        }
+
+
         if (username!=null&&!"".equals(username))
         {
 
