@@ -36,7 +36,7 @@
                     <a th:href="@{/user/changePassword}">修改密码</a>
                 </dd>
             </dl></li>
-        <li class="layui-nav-item"><a th:href="@{/user/logout}">注销</a></li>
+        <li class="layui-nav-item"><a th:href="@{/user/logout}">退出登录</a></li>
     </ul>
 </div>
 <!--侧边栏-->
@@ -120,7 +120,7 @@
             <td>-</td>
             <td th:text="${#dates.format(userFolder.getModifyTime())}"></td>
             <td>
-
+                <a th:href="@{/user/home/{parentId}/(parentId=${userFolder.getFolderId()})} "><button type="button" class="layui-btn   layui-btn-radius layui-btn-primary"  >进入</button></a>
                 <a  th:href="@{/user/deleteFolder/{folderId}/(folderId=${userFolder.getFolderId()})} " onclick="if(confirm('确定删除这个文件夹吗？【7天内可以在回收站内找回】')==false)return false;"><button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></a>
 
             </td>

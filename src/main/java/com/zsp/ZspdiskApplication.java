@@ -20,6 +20,7 @@ public class ZspdiskApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ZspdiskApplication.class, args);
+
     }
 //    没有ssl证书就不需要填入这个
 //    @Bean

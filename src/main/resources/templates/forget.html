@@ -1,37 +1,171 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 
+<html lang="en" class="no-js"
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>zsp的网盘注册</title>
-    <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css" />
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>找回密码</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}" />
+	<!--必要样式-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/component.css}"  />
+	<!--[if IE]>
+	<script  th:src="@{/js/html5.js }"></script>
+
+
+<![endif]-->
 </head>
-
 <body>
-<div class="login_box" >
-    <div class="login_l_img"  ><img th:src="@{/images/login-img.png}" /></div>
-    <div class="login">
-        <div class="login_logo" style="margin-top: -20px"><a href="#"><img th:src="@{/images/login_logo.png}" /></a></div>
 
-        <p th:text="${msg}" style="color: red"></p>
-        <form method="post" th:action="@{/submitForget}">
-            <input name="username" type="text"   th:placeholder="用户名" onfocus="this.value=''" onblur="if(this.value==''){this.value='用户名'}">
-            <input name="phone" type="text"   th:placeholder="电话号码" onfocus="this.value=''" onblur="if(this.value==''){this.value='手机号'}">
-            <input name="code" type="text"  th:placeholder="验证码"  onfocus="this.value=''" onblur="if(this.value==''){this.value='手机验证码'}">
-            <input value="提交" style="width:100%;" type="submit">
-        </form>
-        <a align='right' th:href="@{/toRegist}">注册账号</a>
-        <a align='right' th:href="@{/}" >返回登录</a>
-    </div>
-    <div class="copyright">朱少鹏有限公司 版权所有©2020-2200 技术支持电话：15396226187
-        <a  href="http://beian.miit.gov.cn" style="color:white;">ICP备案号:闽ICP备2020019933号-1</a>
-    </div>
-</div>
-<div style="text-align:center;">
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header" class="large-header">
+					<canvas id="demo-canvas"></canvas>
+					<div class="logo_box">
+						<h3>找回密码</h3>
+						<div th:text="${msg}" style="color:white;margin-left: 4%"></div>
+						<form th:action="@{/submitForget}"   method="post">
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="username" type="text" id="username" onblur="error_username()" class="text" style="color: #FFFFFF !important"   placeholder="请输入账号">
+								<div id="error_username" ></div>
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+								<input name="phone" id="phone" type="text" class="text" onblur="error_phone()"style="color: #FFFFFF !important; position:absolute; z-index:100;"value=""  placeholder="输入手机号码">
+								<div id="error_phone"  style="margin-top: 15%"></div>
+							</div>
+							<div class="input_outer" style="width: 60%">
+								<span class="user_code"></span>
+								<input name="code" id="code" type="text" class="text"  onblur="error_code()" style="color: #FFFFFF !important; position:absolute; z-index:100;width: 50%"value=""  placeholder="请输入验证码"  maxlength="4" >
+								<input type="button" id="btn"  value="免费获取验证码"  class="layui-btn layui-btn-primary layui-btn-radius" style="margin-left: 107%;height: 100%;width: 72%;" ></input>
+
+								<div id="error_code"  style="margin-top: 3%"></div>
+							</div>
+
+
+							<div class="mb2"><input class="act-but submit"  type="submit" style="color: #FFFFFF;width: 100%" value="提交"  ></div>
+						</form>
+						<a  th:href="@{/}" style="color: white" >返回登录&nbsp&nbsp</a>
+						<a align='right' style="color: white"  th:href="@{/toRegist}">注册账号</a>
+						<div   class="foot_title"   >朱少鹏有限公司 技术支持电话：15396226187<br/>
+ 						</div>
+					</div>
+
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script th:src=" @{/js/TweenLite.min.js} "></script>
+		<script th:src="@{/js/EasePack.min.js}"></script>
+		<script th:src="@{/js/rAF.js}"></script>
+		<script th:src="@{/js/demo-1.js}"></script>
+		<link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+		<script th:src="@{/js/jquery-3.5.1.js}"></script>
+		<script th:src="@{/layui/layui.js}"></script>
+
 
 </div>
+		<script type="text/javascript">
+			function error_username() {
+
+				var username = document.getElementById('username').value;
+				var str="^[^0-9][\\w_]{5,9}$";
+				var check=new RegExp(str);
+				// 判断用户名是否符合规范
+				if (!check.exec(username))
+				{
+
+					var error_username=document.getElementById("error_username");
+					error_username.innerHTML="用户名为6-10位，包含字母数字且不能以数字开头";
+				}
+				else
+				{
+					var error_username=document.getElementById("error_username");
+					error_username.innerHTML="";
+				}
+				// 判断用户名不能为空
+				if (username=="")
+				{
+					var error_username=document.getElementById("error_username");
+					error_username.innerHTML="登录账号不能为空";
+				}
+
+			}
+			function error_phone() {
+
+				var phone = document.getElementById('phone').value;
+				var str="^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+				var check=new RegExp(str);
+				if (!check.exec(phone))
+				{
+
+					var error_phone=document.getElementById("error_phone");
+					error_phone.innerHTML="输入的手机号码不规范";
+				}else
+				{
+					var error_phone=document.getElementById("error_phone");
+					error_phone.innerHTML="";
+				}
+				if (phone=="")
+				{
+
+					var error_phone=document.getElementById("error_phone");
+					error_phone.innerHTML="手机号不能为空";
+				}
+
+			}
+			function error_code() {
+
+				var code = document.getElementById('code').value;
+				if (code=="")
+				{
+
+					var error_code=document.getElementById("error_code");
+					error_code.innerHTML="验证码不能为空";
+				}else
+				{
+					var error_code=document.getElementById("error_code");
+					error_code.innerHTML="";
+				}
+
+			}
+
+		</script>
+<!--		jQuery 60s后发送短信-->
+
+		<script>
+			var i=60;var t;
+			$(function(){
+				$("#btn").click(function jishi(){
+					var phone = document.getElementById('phone').value;
+					var str="^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+					var check=new RegExp(str);
+					if (($("#phone").val()==""||!check.exec(phone))&&i==60)
+					{
+						$("#btn").attr("disabled",false);
+						$("#error_phone").html("请输入正确手机号后重新点击发送");
+
+					}
+					else{
+						if (i==59) {
+							$.post("/message", {phone: phone}, function (data) { })
+						}
+						$("#btn").attr("value",i+"秒重发短信");
+						i=i-1;
+						$("#btn").attr("disabled",true);
+						t=setTimeout(jishi,1000);
+						if(i==0){
+							clearTimeout(t);
+							$("#btn").attr("disabled",false);
+							$("#btn").attr("value","重新发送短信");
+							i=60;
+						}
+					}
+
+
+				});
+			});
+		</script>
 </body>
 </html>

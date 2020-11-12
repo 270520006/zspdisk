@@ -19,6 +19,17 @@
     </properties>
 
     <dependencies>
+<!--        阿里云短信业务依赖-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.60</version>
+        </dependency>
 <!--        糊涂工具包-->
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <dependency>

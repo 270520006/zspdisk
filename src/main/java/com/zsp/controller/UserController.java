@@ -83,7 +83,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/regist")
-    public String regist(String username, String password,String phone,Model model,HttpSession session) {
+    public String regist(String username, String password,String phone,Model model,String code,HttpSession session) {
+        String codeNum = (String) session.getAttribute("codeNum");
         if (password == null || "".equals(password)) {
             model.addAttribute("msg", "密码不能为空");
             return "regist";
@@ -91,6 +92,10 @@ public class UserController {
         if (phone == null || "".equals(phone)) {
             model.addAttribute("msg", "手机号不能为空");
 
+            return "regist";
+        }
+        if (code == null || "".equals(code)) {
+            model.addAttribute("msg", "验证码不能为空");
             return "regist";
         }
         if (!CheckUtils.isChinaPhoneLegal(phone)) {
@@ -105,8 +110,11 @@ public class UserController {
             model.addAttribute("msg", "密码为6-12位，包含字母数字或下划线");
             return "regist";
         }
-
-
+        if (!codeNum.equals(code))
+        {
+            model.addAttribute("msg", "验证码错误，请重新填写");
+            return "regist";
+        }
         if (username!=null&&!"".equals(username))
         {
 
@@ -117,7 +125,7 @@ public class UserController {
                 UsernamePasswordToken token=new UsernamePasswordToken(username,password);
                 subject.login(token);
                 User user=userMapper.queryByUsername(username);
-                System.out.println(user);
+
                 session.setAttribute("user",user);
 
                 return "redirect:/user/home";
@@ -153,15 +161,16 @@ public class UserController {
      */
     @PostMapping("/submitForget")
     public String forget(String username,String phone,String code,Model model,HttpSession session){
+
         User user = userMapper.queryByUsername(username);
-        System.out.println(user);
+        String codeNum =(String) session.getAttribute("codeNum");
         if (user==null)
         {
             model.addAttribute("msg","该用户不存在");
             return "forget";
         }
         if (phone.equals(user.getPhone())){
-            if (code!=null&&!"".equals(code)){
+            if (codeNum.equals(code)){
 
                 Subject subject= SecurityUtils.getSubject();
                 UsernamePasswordToken token=new UsernamePasswordToken(username,user.getPassword());
