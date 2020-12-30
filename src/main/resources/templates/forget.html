@@ -24,6 +24,8 @@
 					<canvas id="demo-canvas"></canvas>
 					<div class="logo_box">
 						<h3>找回密码</h3>
+
+						<br/>
 						<div th:text="${msg}" style="color:white;margin-left: 4%"></div>
 						<form th:action="@{/submitForget}"   method="post">
 							<div class="input_outer">
@@ -45,10 +47,12 @@
 							</div>
 
 
-							<div class="mb2"><input class="act-but submit"  type="submit" style="color: #FFFFFF;width: 100%" value="提交"  ></div>
+							<input class="layui-btn layui-btn-normal layui-btn-radius"  type="submit" style="color: #FFFFFF;width: 100%" value="提交"  >
 						</form>
+						<div style="margin-top: 3%">
 						<a  th:href="@{/}" style="color: white" >返回登录&nbsp&nbsp</a>
 						<a align='right' style="color: white"  th:href="@{/toRegist}">注册账号</a>
+						</div>
 						<div   class="foot_title"   >朱少鹏有限公司 技术支持电话：15396226187<br/>
  						</div>
 					</div>
@@ -141,6 +145,24 @@
 					var phone = document.getElementById('phone').value;
 					var str="^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
 					var check=new RegExp(str);
+					if (i==59) {
+						$.ajax({
+							type : "POST",
+							url :"/message",
+							dataType:"json",
+
+							data:{
+								"phone":phone
+							},
+							success:function (data) {
+								if (data=="404")
+									alert("请检查手机号码是否正确或平台短信服务欠费");
+
+							}
+						});
+					}
+
+
 					if (($("#phone").val()==""||!check.exec(phone))&&i==60)
 					{
 						$("#btn").attr("disabled",false);
@@ -148,9 +170,7 @@
 
 					}
 					else{
-						if (i==59) {
-							$.post("/message", {phone: phone}, function (data) { })
-						}
+
 						$("#btn").attr("value",i+"秒重发短信");
 						i=i-1;
 						$("#btn").attr("disabled",true);
@@ -162,6 +182,7 @@
 							i=60;
 						}
 					}
+
 
 
 				});

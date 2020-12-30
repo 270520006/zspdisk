@@ -3,11 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zsp.mapper.UserMapper">
+<select id="queryAll" resultType="user">
+     select * from zspdisk.user
+</select>
+
 <select id="queryById" resultType="user">
     select * from zspdisk.user where user_id=#{userId}
 </select>
 <select id="queryByUsername" resultType="user">
-     select * from zspdisk.user where username=#{username}
+     select * from zspdisk.user where username=#{username} and  level !=0
 </select>
 
 
@@ -40,6 +44,15 @@
         </if>
         <if test="privatePass!=null">
             ,private_pass=#{privatePass}
+        </if>
+        <if test="level!=null">
+            ,level=#{level}
+        </if>
+        <if test="isVip!=null">
+            ,is_vip=#{isVip}
+        </if>
+        <if test="memorySize !=null">
+            ,memory_size =#{memorySize}
         </if>
     </set>
     where user_id=#{userId}

@@ -1,8 +1,10 @@
 package com.zsp.controller;
 
+import com.zsp.mapper.NoticeUpdateMapper;
 import com.zsp.mapper.OriginFileMapper;
 import com.zsp.mapper.UserFileMapper;
 import com.zsp.mapper.UserFolderMapper;
+import com.zsp.pojo.NoticeUpdate;
 import com.zsp.pojo.User;
 import com.zsp.pojo.UserFile;
 import com.zsp.pojo.UserFolder;
@@ -25,7 +27,8 @@ public class FileController {
     UserFolderMapper userFolderMapper;
     @Autowired
     UserFileMapper userFileMapper;
-
+    @Autowired
+    NoticeUpdateMapper noticeUpdateMapper;
 
     /**
      * 用户主页
@@ -63,7 +66,10 @@ public class FileController {
 
     }
     @RequestMapping("/user/notice")
-    public String notice(){
+    public String notice(Model model){
+        List<NoticeUpdate> noticeUpdates = noticeUpdateMapper.queryAll();
+        model.addAttribute("noticeUpdates",noticeUpdates);
+
         return "user/notice";
     }
 

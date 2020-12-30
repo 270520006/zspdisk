@@ -41,7 +41,7 @@ class ZspdiskApplicationTests {
         System.out.println(codeNum);
         HashMap<String,Object> code =new HashMap<>();
         code.put("code",codeNum);
-        MessageUtils.sendMessage("15396226187",code,"SMS_205455159");
+//        MessageUtils.sendMessage("15396226187",code,"SMS_205455159");
     }
 
 }

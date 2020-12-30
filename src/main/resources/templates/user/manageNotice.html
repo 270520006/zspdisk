@@ -9,9 +9,9 @@
 </head>
 <body class="layui-layout-body"  >
 <div class="layui-layout layui-layout-admin">
-    <div th:replace="~{comments/comment.html::topbar}"></div>
-
-    <div th:replace="~{comments/comment.html::sidebar}"></div>
+    <div th:replace="~{comments/manageComment.html::topbar}"></div>
+    <!--侧边栏-->
+    <div th:replace="~{comments/manageComment.html::sidebar}"></div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
@@ -44,7 +44,23 @@
                 </div>
             </li>
         </ul>
+
+
         <ul class="layui-timeline">
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis"></i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title"></h3>
+                    <p>
+                         zsp网盘的制作终于完成了！
+                        <br>后续还会陆续更新其他新功能
+                        <br>这个项目只要我有空，就会一直更新下去
+                        <br>接下去的目标就是找到个工作先稳定下来<i class="layui-icon"></i>
+                    </p>
+                </div>
+            </li>
+
+
 
             <li class="layui-timeline-item">
                 <i class="layui-icon layui-timeline-axis"></i>

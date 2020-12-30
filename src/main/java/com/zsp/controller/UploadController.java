@@ -172,7 +172,7 @@ public class UploadController {
 
 //      window文件下载地址2.0 window下截取字符,但这里需要先去tomcat的temp下创建一个files文件夹
             //      这里使用uuid是为了防止上传文件跟我们的源文件名字重名
-            url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+IdUtil.randomUUID()+"="+filename  ;
+//            url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+IdUtil.randomUUID()+"="+filename  ;
 //                System.out.println(url);
 
 //            linux文件下载地址2.0 window下截取字符,但这里需要先去tomcat的temp下创建一个files文件夹

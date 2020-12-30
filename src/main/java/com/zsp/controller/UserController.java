@@ -248,6 +248,7 @@ public class UserController {
          user.setUserId( user1.getUserId());
          userMapper.updateUser(user);
          session.setAttribute("user",userMapper.queryById(user.getUserId()));
+
          return "redirect:/user/home";
     }
     @PostMapping("/user/toSubmitPrivate")

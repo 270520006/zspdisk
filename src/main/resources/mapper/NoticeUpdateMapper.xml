@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsp.mapper.NoticeUpdateMapper">
+<select id="queryAll" resultType="noticeUpdate">
+     select * from zspdisk.notice_update
+</select>
+<insert id="addNotice">
+    insert into zspdisk.notice_update (notice_date,notice_content)values(#{noticeDate},#{noticeContent})
+</insert>
+
+</mapper>

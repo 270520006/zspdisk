@@ -57,3 +57,12 @@ mybatis:
   type-aliases-package: com.zsp.pojo
   configuration:
     map-underscore-to-camel-case: true
+http:
+  port: 80
+server:
+  port: 443
+  ssl:
+    key-store: classpath:4707101_www.xmzsp.cn.pfx
+    key-store-password: H1AYaI8l
+    keyStoreType: PKCS12
+

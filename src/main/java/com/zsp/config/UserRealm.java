@@ -22,6 +22,9 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         UsernamePasswordToken userToken = (UsernamePasswordToken) token;
+
+
+
         User user = userMapper.queryByUsername(userToken.getUsername());
         if (user==null) {return null;}
 

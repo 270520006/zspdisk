@@ -24,6 +24,7 @@
 					<canvas id="demo-canvas"></canvas>
 					<div class="logo_box">
 						<h3>注册账号</h3>
+						<br/>
 						<div th:text="${msg}" style="color:white;margin-left: 4%"></div>
 						<form th:action="@{/regist}"   method="post">
 							<div class="input_outer">
@@ -44,17 +45,19 @@
 							<div class="input_outer" style="width: 60%">
 								<span class="user_code"></span>
 								<input name="code" id="code" type="text" class="text"  onblur="error_code()" style="color: #FFFFFF !important; position:absolute; z-index:100;width: 50%"value=""  placeholder="请输入验证码"  maxlength="4" >
-								<input type="button" id="btn"  value="免费获取验证码"  class="layui-btn layui-btn-primary layui-btn-radius" style="margin-left: 107%;height: 100%;width: 72%;" ></input>
+								<input type="button" id="btn"  value="免费获取验证码" class="layui-btn layui-btn-primary layui-btn-radius" style="margin-left: 107%;height: 100%;width: 72%;" ></input>
 
 
 								<div id="error_code"  style="margin-top: 3%"></div>
 							</div>
 
 
-							<div class="mb2"><input class="act-but submit"  type="submit" style="color: #FFFFFF;width: 100%" value="提交"  ></div>
+							<input class="layui-btn layui-btn-normal layui-btn-radius"  type="submit" style="color: #FFFFFF;width: 100%" value="注册"    >
 						</form>
+						<div style="margin-top: 3%">
 						<a  th:href="@{/}" style="color: white" >返回登录&nbsp&nbsp</a>
 						<a align='right' style="color: white"  th:href="@{/forget}">忘记密码</a>
+						</div>
 						<div   class="foot_title"   >朱少鹏有限公司 技术支持电话：15396226187<br/>
  						</div>
 					</div>
@@ -166,6 +169,8 @@
 				}
 
 			}
+
+
 		</script>
 		<script>
 			var i=60;var t;
@@ -174,6 +179,23 @@
 					var phone = document.getElementById('phone').value;
 					var str="^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
 					var check=new RegExp(str);
+					if (i==59) {
+						$.ajax({
+							type : "POST",
+							url :"/message",
+							dataType:"json",
+
+							data:{
+								"phone":phone
+							},
+							success:function (data) {
+								if (data=="404")
+								alert("请检查手机号码是否正确或平台短信服务欠费");
+							}
+						});
+					}
+
+
 					if (($("#phone").val()==""||!check.exec(phone))&&i==60)
 					{
 						$("#btn").attr("disabled",false);
@@ -181,9 +203,7 @@
 
 					}
 					else{
-						if (i==59) {
-							$.post("/message", {phone: phone}, function (data) { })
-						}
+
 						$("#btn").attr("value",i+"秒重发短信");
 						i=i-1;
 						$("#btn").attr("disabled",true);
@@ -195,6 +215,7 @@
 							i=60;
 						}
 					}
+
 
 
 				});

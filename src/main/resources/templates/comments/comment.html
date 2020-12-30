@@ -293,4 +293,44 @@
 
 </div>
 
+
+<!--错误页面的头部 -->
+
+<div class="layui-header"   th:fragment="error_topbar">
+    <div class="layui-logo">zsp网盘</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left   "   >
+        <li class="layui-nav-item"><a th:href="@{/user/home}">网盘</a></li>
+        <li class="layui-nav-item"><a th:href="@{/user/uploadPage}" >多文件上传</a></li>
+        <li class="layui-nav-item"><a th:href="@{/user/notice}">更新公告</a></li>
+        <li class="layui-nav-item"><a href="javascript:;">更多</a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a href="">邮件管理</a>
+                </dd>
+                <dd>
+                    <a href="">消息管理</a>
+                </dd>
+                <dd>
+                    <a href="">授权管理</a>
+                </dd>
+            </dl></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item"><a href="javascript:;" th:text="资源未找到"></a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a th:href="@{/user/information}">基本资料</a>
+                </dd>
+                <dd>
+                    <a th:href="@{/user/safeInformation}">安全设置</a>
+                </dd>
+                <dd>
+                    <a th:href="@{/user/changePassword}">修改密码</a>
+                </dd>
+            </dl></li>
+        <li class="layui-nav-item"><a th:href="@{/}">返回首页</a></li>
+    </ul>
+</div>
+
 </html>
