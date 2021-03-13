@@ -62,7 +62,7 @@ public class ManageController {
     public String manage(HttpSession session,Model model){
         List<User> userList = userMapper.queryAll();
         model.addAttribute("userList",userList);
-        return "/user/manage";
+        return "user/manage";
     }
     @RequestMapping("/user/manageInformation")
     public String manageInformation(){
