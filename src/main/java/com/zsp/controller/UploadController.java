@@ -77,7 +77,7 @@ public class UploadController {
                 OriginFile queryByMD5 = originFileMapper.queryByMD5(md5);
 
 //                1如果发现md5值相同则进行源文件表的数量+1
-//                2把存有的源文件添加进用户文件表里
+//                2把存有的源    文件添加进用户文件表里
 //                3删除上传过来的源文件并且反馈给用户上传成功
                 if ( queryByMD5!=null)
                 {

@@ -100,7 +100,10 @@
     </fieldset>
     <table class="layui-table" lay-skin="line">
         <colgroup>
-            <col width="500">
+<!--            <col width="500">-->
+<!--            <col width="300">-->
+<!--            <col width="300">-->
+            <col width="450">
             <col width="300">
             <col width="300">
             <col>
@@ -135,12 +138,34 @@
               <a th:href="@{/user/download/{originId}/(originId=${userFile.getOriginId()})}"> <button type="button" class="layui-btn layui-btn-normal layui-btn-radius"  >下载</button></a>
 
                 <a  th:href="@{/user/deleteFile/{fileId}/(fileId=${userFile.getFileId()})}" onclick="if(confirm('确定删除这个文件吗？【7天内可以在回收站内找回】')==false)return false;"><button type="button" class="layui-btn layui-btn-danger layui-btn-radius">删除</button></a>
+                <button type="button" class="layui-btn   layui-btn-warm layui-btn-radius" onclick="shareFile(this)" th:value="${userFile.getFileId()}" >分享</button>
+
 
             </td>
         </tr>
+        <textarea id="input" >这是幕后黑手</textarea>
         </tbody>
     </table>
 
+    <style type="text/css">
+        .wrapper {position: relative;}
+        #input {position: absolute;top: 0;left: 0;opacity: 0;z-index: -10;}
+    </style>
+    <script type="text/javascript">
+        function shareFile(obj) {
+            var fileID=$(obj).val();
+            // 网盘部署上
+            // var url = "xmzsp.cn/user/shareFile/"+fileID ;
+            var url = "http://localhost:8080/user/shareFile/"+fileID ;
+            var input = document.getElementById("input");
+            console.log(url);
+            input.value = url; // 修改文本框的内容
+            console.log(input.value);
+            input.select(); // 选中文本
+            document.execCommand("copy"); // 执行浏览器复制命令
+            alert("复制分享链接成功！快去分享给好友把");
+        }
+    </script>
 </div>
 <!--功能按键的抽取-->
 <div th:fragment="function">
@@ -180,6 +205,11 @@
 
     <script th:src="@{/layui/layui.js}"></script>
 
+
+    <style type="text/css">
+        .wrapper {position: relative;}
+        #input {position: absolute;top: 0;left: 0;opacity: 0;z-index: -10;}
+    </style>
     <script>
         // 绑定上传文件功能
         layui.use(["layer","form", "upload","jquery","element"], function () {
@@ -285,7 +315,6 @@
         function backHome() {
             window.location.href="/user/home";
         }
-
 
     </script>
 
