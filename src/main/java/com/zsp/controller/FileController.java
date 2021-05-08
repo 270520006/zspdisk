@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class FileController {
@@ -68,7 +70,8 @@ public class FileController {
     @RequestMapping("/user/notice")
     public String notice(Model model){
         List<NoticeUpdate> noticeUpdates = noticeUpdateMapper.queryAll();
-        model.addAttribute("noticeUpdates",noticeUpdates);
+        List<NoticeUpdate> result = noticeUpdates.stream().sorted(Comparator.comparingInt(NoticeUpdate::getNoticeId).reversed()).collect(Collectors.toList());
+        model.addAttribute("noticeUpdates",result);
 
         return "user/notice";
     }

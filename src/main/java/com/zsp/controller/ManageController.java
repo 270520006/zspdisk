@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class ManageController {
@@ -150,7 +152,8 @@ public class ManageController {
     @RequestMapping("/user/manageNotice")
     public String manageNotice(Model model){
         List<NoticeUpdate> noticeUpdates = noticeUpdateMapper.queryAll();
-        model.addAttribute("noticeUpdates",noticeUpdates);
+        List<NoticeUpdate> result = noticeUpdates.stream().sorted(Comparator.comparingInt(NoticeUpdate::getNoticeId).reversed()).collect(Collectors.toList());
+        model.addAttribute("noticeUpdates",result);
         return "user/manageNotice";
     }
 
