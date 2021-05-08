@@ -6,6 +6,9 @@
 <select id="queryByUserId" resultType="userFile" >
     select * from user_file where user_id=#{userId} and parent_id=0 and file_status=1
 </select>
+<select id="queryByUserIdAll" resultType="userFile" >
+    select * from user_file where user_id=#{userId}
+</select>
 <select id="queryByFileId" resultType="userFile" >
     select * from user_file where file_id=#{fileId}  and file_status=1
 </select>

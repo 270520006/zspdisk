@@ -2,9 +2,12 @@ package com.zsp.controller;
 
 import com.mysql.cj.protocol.x.Notice;
 import com.zsp.mapper.NoticeUpdateMapper;
+import com.zsp.mapper.UserFileMapper;
 import com.zsp.mapper.UserMapper;
 import com.zsp.pojo.NoticeUpdate;
 import com.zsp.pojo.User;
+import com.zsp.pojo.UserFile;
+import com.zsp.utils.FileSizeHelper;
 import com.zsp.utils.GetNowUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ManageController {
@@ -28,6 +33,8 @@ public class ManageController {
     UserMapper userMapper;
     @Autowired
     NoticeUpdateMapper noticeUpdateMapper;
+    @Autowired
+    UserFileMapper userFileMapper;
     @GetMapping("/manage")
     public String loginManage(){
         return "manage";
@@ -171,6 +178,20 @@ public class ManageController {
         }
         userMapper.updateUser(user);
         return "redirect:/user/manage";
+    }
+    @RequestMapping("/user/checkUserFile/{userId}")
+    public String checkUserFile(@PathVariable("userId") Integer userId,Model model){
+        List<UserFile> userFiles = userFileMapper.queryByUserIdAll(userId);
+        model.addAttribute("userFiles",userFiles);
+        model.addAttribute("manageUserName",userMapper.queryById(userId));
+        if (userFiles.size()>=1) {
+            Map<Integer, String> fileSize = new HashMap<>();
+            for (UserFile userFile : userFiles) {
+                fileSize.put(userFile.getFileId(), FileSizeHelper.getHumanReadableFileSize(userFile.getFileSize()));
+            }
+            model.addAttribute("fileSize", fileSize);
+        }
+            return "user/checkUserFile";
     }
 
 }

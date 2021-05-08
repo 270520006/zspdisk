@@ -40,7 +40,7 @@
                 <tbody>
                 <tr th:each="user:${userList}">
                     <!--            parentId就是这个文件夹的当前id-->
-                    <td><a  th:text="${user.getUsername()} "></a></td>
+                    <td><a  th:text="${user.getUsername()}" th:href="@{/user/checkUserFile/{userId}/(userId=${user.getUserId()})}"></a></td>
                     <td th:text="${user.getPassword()}"></td>
                     <td th:text="${user.getNickname()}"></td>
                     <td th:text="正常" th:if="${user.getLevel()==1}" style="color: #01AAED"></td>

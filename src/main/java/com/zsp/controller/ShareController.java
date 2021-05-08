@@ -99,6 +99,7 @@ public class ShareController {
         User user =(User) session.getAttribute("user");
 //        获取当前的分享文件id
         int  shareFileId = (int) session.getAttribute("shareFileId");
+        if (shareFileId==0){return "redirect:/user/home";}
         System.out.println(shareFileId);
 //        告诉下载源当前id   就是下载文件的当前id
         Integer nowId =(Integer) session.getAttribute("uploadId");

@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface UserFileMapper {
     List<UserFile> queryByUserId(int userId);
+    List<UserFile> queryByUserIdAll(int userId);
     UserFile queryByFileId(int fileId);
     List<UserFile> queryByParentId(int userId ,int parentId);
     List<UserFile> queryByFileName(int userId ,String fileName);
