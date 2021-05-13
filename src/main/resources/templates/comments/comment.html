@@ -13,13 +13,13 @@
         <li class="layui-nav-item"><a href="javascript:;">更多</a>
             <dl class="layui-nav-child">
                 <dd>
-                    <a href="">邮件管理</a>
+                    <a th:href="@{/user/information}">基本资料</a>
                 </dd>
                 <dd>
-                    <a href="">消息管理</a>
+                    <a th:href="@{/user/safeInformation}">安全设置</a>
                 </dd>
                 <dd>
-                    <a href="">授权管理</a>
+                    <a th:href="@{/user/changePassword}">修改密码</a>
                 </dd>
             </dl></li>
     </ul>
@@ -45,7 +45,8 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree"   lay-filter="test">
             <li class="layui-nav-item layui-nav-itemed">
-                <a class="" th:href="@{/user/home}">全部文件</a>
+
+                    <a class="" th:href="@{/user/home}">全部文件</a>
                 <dl class="layui-nav-child">
                     <dd>
                         <a th:href="@{/user/home/photos}">图片</a>
@@ -69,22 +70,17 @@
                     <dd>
                         <a th:href="@{/user/home}">其他</a>
                     </dd>
-                    <dd>
-                        <a  th:href="@{/user/home/recycle}">回收站</a>
-                    </dd>
+
                 </dl></li>
             <li class="layui-nav-item"><a href="javascript:;">更多功能</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a href="javascript:;">结识云盘好友</a>
-                    </dd>
-                    <dd>
-                        <a href="javascript:;">推荐好友</a>
+                        <a  th:href="@{/user/home/recycle}">回收站</a>
                     </dd>
                 </dl>
             </li>
 
-            <li class="layui-nav-item"><a href="">会员中心</a></li>
+
         </ul>
     </div>
 </div>
@@ -335,13 +331,13 @@
         <li class="layui-nav-item"><a href="javascript:;">更多</a>
             <dl class="layui-nav-child">
                 <dd>
-                    <a href="">邮件管理</a>
+                    <a th:href="@{/user/information}">基本资料</a>
                 </dd>
                 <dd>
-                    <a href="">消息管理</a>
+                    <a th:href="@{/user/safeInformation}">安全设置</a>
                 </dd>
                 <dd>
-                    <a href="">授权管理</a>
+                    <a th:href="@{/user/changePassword}">修改密码</a>
                 </dd>
             </dl></li>
     </ul>
