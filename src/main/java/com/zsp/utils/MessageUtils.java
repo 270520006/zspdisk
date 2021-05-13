@@ -18,7 +18,7 @@ public class MessageUtils {
     public static boolean sendMessage(String phone, Map<String,Object> code,String TemplateCode){
 
 
-            DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI5t66xzQFjFbxu9uM1T4d", "Yzs5p1cWlPGMZeFhIY5u1KSQU3bemZ");
+            DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "xxxxxx", "xxxxx");
             IAcsClient client = new DefaultAcsClient(profile);
 
 //            上面为验证码平台固定配置，不要动

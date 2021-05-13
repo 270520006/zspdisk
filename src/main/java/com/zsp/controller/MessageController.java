@@ -33,7 +33,7 @@ public class MessageController {
 
         try {
 
-            MessageUtils.sendMessage(phone,code,"SMS_205455159");
+            MessageUtils.sendMessage(phone,code,"xxxxx");
         } catch (Exception e) {
             e.printStackTrace();
             return "404";
