@@ -14,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @SpringBootTest
 class ZspdiskApplicationTests {
@@ -22,6 +24,12 @@ class ZspdiskApplicationTests {
     DataSource dataSource;
     @Autowired
     UserMapper userMapper;
+    @Test
+    void testList()  {
+        List<User> users = userMapper.queryAll();
+        System.out.println(users);
+
+    }
     @Test
     void contextLoads() throws SQLException {
         Connection connection = dataSource.getConnection();

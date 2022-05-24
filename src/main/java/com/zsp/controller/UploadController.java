@@ -57,20 +57,20 @@ public class UploadController {
 //                文件下载地址
 
 //      window/linux文件下载1.0    到tomcat的工作目录下 ，但问题太多了，因为每创建一个tomcat就要重新更换磁盘文件位置
-//                String url=request.getServletContext().getRealPath("/") +filename;
-
+                String url=request.getServletContext().getRealPath("/") +filename;
+                System.out.println(url);
 //      window文件下载地址2.0 window下截取字符
 //      但这里需要先去tomcat的temp下创建一个files文件夹
 //      这里使用uuid是为了防止上传文件跟我们的源文件名字重名
 
 //                String url=StrUtil.sub(request.getServletContext().getRealPath("/"),0,41)+"\\files\\"+IdUtil.randomUUID()+"="+filename  ;
-
+//
 //                System.out.println(url);
 
 //        linux文件下载地址2.0版本   直接存到tmp下files文件夹下，（我们在/tmp/下创建了一个files用来存储）
 //                String url= "/tmp/files/"+filename;
 //        linux3.0版本
-                String url= "/tmp/files/"+IdUtil.randomUUID()+"="+filename  ;
+//                String url= "/tmp/files/"+IdUtil.randomUUID()+"="+filename  ;
 
                 file.transferTo(new File(url) );
                 String md5=GetFileMD5.getMD5Three(url);
